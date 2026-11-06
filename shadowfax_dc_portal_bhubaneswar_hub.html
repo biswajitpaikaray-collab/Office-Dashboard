@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Shadowfax DC Portal – Bhubaneswar Hub</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- SheetJS for Excel/CSV Parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    html, body {
+      background: radial-gradient(circle at 50% -20%, #004D40, #002722 80%);
+      color: #ffffff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      font-weight: 700;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #00241f; }
+    ::-webkit-scrollbar-thumb { background: #00897B; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #e6e600; }
+
+    /* Shadowfax Brand SVG Logo Template */
+    .sfx-logo-svg {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* 3D Glassmorphic Cards & Elevated Panels */
+    .card-3d {
+      background: linear-gradient(145deg, rgba(0, 89, 79, 0.9), rgba(0, 48, 43, 0.95));
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(230, 230, 0, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.35);
+      border-left: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 1.5rem;
+      padding: 1.35rem;
+      box-shadow: 0 16px 35px -8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 230, 190, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card-3d:hover {
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(230, 230, 0, 0.2);
+    }
+
+    /* 3D Stat Cards */
+    .stat-card-3d {
+      position: relative;
+      border-radius: 1.6rem;
+      padding: 1.25rem 1.4rem;
+      border: 1.5px solid rgba(230, 230, 0, 0.3);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 14px 30px -5px rgba(0,0,0,0.75), inset 0 2px 4px rgba(255,255,255,0.25), inset 0 -2px 6px rgba(0,0,0,0.5);
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .stat-card-3d:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+    
+    /* Vibrant 3D Accent Themes */
+    .theme-amber {
+      background: linear-gradient(135deg, rgba(230, 230, 0, 0.3), rgba(0, 77, 64, 0.8) 70%, rgba(0, 39, 34, 0.95));
+      border-color: rgba(230, 230, 0, 0.5);
+    }
+    .theme-cyan {
+      background: linear-gradient(135deg, rgba(0, 200, 180, 0.3), rgba(0, 77, 64, 0.8) 70%, rgba(0, 39, 34, 0.95));
+      border-color: rgba(0, 230, 200, 0.5);
+    }
+    .theme-emerald {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(0, 77, 64, 0.8) 70%, rgba(0, 39, 34, 0.95));
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    .theme-purple {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(0, 77, 64, 0.8) 70%, rgba(0, 39, 34, 0.95));
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    /* 3D Floating Icon Containers */
+    .icon-box-3d {
+      width: 3.4rem; height: 3.4rem;
+      border-radius: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -3px 6px rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+
+    /* Modern 3D Inputs */
+    .inp-3d {
+      background: linear-gradient(180deg, #002b26, #001f1b);
+      border: 1.5px solid #00897B;
+      border-top: 1.5px solid #00a896;
+      border-radius: .85rem;
+      padding: .65rem .95rem;
+      font-size: .85rem;
+      font-weight: 800;
+      color: #ffffff;
+      width: 100%;
+      outline: none;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.7);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .inp-3d:focus {
+      border-color: #e6e600;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.7), 0 0 14px rgba(230, 230, 0, 0.4);
+    }
+
+    /* Modern Dark Neumorphic Login UI */
+    .lg-wrap { max-width: 28rem; margin: 0 auto; padding-top: 1.5rem; }
+    .lg-card {
+      border-radius: 2.2rem;
+      padding: 2.2rem 2rem 1.8rem;
+      background: linear-gradient(160deg, #00695c, #00332c);
+      border: 2px solid #00897B;
+      border-top: 2px solid #e6e600;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.95), inset 0 1px 2px rgba(255,255,255,0.25);
+    }
+    .lg-avatar {
+      width: 5.2rem; height: 5.2rem; margin: -0.5rem auto 1.5rem;
+      border-radius: 1.6rem; background: linear-gradient(135deg, #00897B, #004D40);
+      border: 2px solid #e6e600;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 12px 25px rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lg-field {
+      display: flex; align-items: center; gap: .75rem;
+      background: #00241f; border: 1.5px solid #00897B;
+      border-radius: 999px; padding: .8rem 1.2rem;
+      margin-bottom: 1.1rem; color: #a7f3d0; transition: border-color 0.2s, box-shadow 0.2s;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+      font-weight: 800;
+    }
+    .lg-field:focus-within { border-color: #e6e600; box-shadow: inset 0 2px 5px rgba(0,0,0,0.6), 0 0 14px rgba(230,230,0,0.4); }
+    .lg-field input { background: transparent; flex: 1; outline: none; color: #fff; font-weight: 800; font-size: .95rem; min-width: 0; }
+    
+    .lg-login-btn {
+      width: 100%; padding: .95rem; border-radius: 999px;
+      font-weight: 900; letter-spacing: .08em; color: #00332c;
+      background: linear-gradient(180deg, #ffff33, #e6e600 70%, #cccc00);
+      box-shadow: 0 10px 25px -4px rgba(230,230,0,0.6), inset 0 2px 3px rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .lg-login-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 14px 30px -4px rgba(230,230,0,0.8); }
+    .lg-login-btn:active { transform: translateY(1px); }
+
+    .lg-reg-btn {
+      width: 100%; padding: .85rem; border-radius: 999px;
+      font-weight: 900; color: #e6e600;
+      background: linear-gradient(180deg, #004D40, #002b26);
+      border: 1.5px solid #00897B; border-top: 1.5px solid #e6e600;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.2);
+      transition: all 0.2s; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .lg-reg-btn:hover { background: #00695c; color: #ffffff; border-color: #e6e600; transform: translateY(-1px); }
+
+    /* 3D Elevated Buttons & Badges */
+    .btn-3d {
+      background: linear-gradient(180deg, #ffff33, #e6e600 80%, #cccc00);
+      color: #002722;
+      font-weight: 900;
+      border-radius: .85rem;
+      padding: .6rem 1.15rem;
+      font-size: .8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      box-shadow: 0 6px 16px -2px rgba(230, 230, 0, 0.5), inset 0 1.5px 2px rgba(255,255,255,0.7);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-3d:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 10px 22px -2px rgba(230, 230, 0, 0.7); }
+    .btn-3d:active { transform: translateY(1px); }
+
+    .btn-secondary-3d {
+      background: linear-gradient(180deg, #00695c, #00332c);
+      color: #e6e600;
+      border: 1.5px solid #00897B;
+      border-top: 1.5px solid #e6e600;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.6), inset 0 1.5px 2px rgba(255,255,255,0.25);
+      font-weight: 900;
+      border-radius: .85rem;
+      padding: .6rem 1.15rem;
+      font-size: .8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary-3d:hover { background: #00796B; color: #fff; transform: translateY(-2px); }
+
+    .pill-3d {
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+      transition: all 0.15s ease;
+    }
+    .pill-3d:hover { transform: translateY(-1px); }
+
+    /* Tables & Headers */
+    th { color: #e6e600; text-align: left; padding: .85rem .75rem; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+    td { padding: .85rem .75rem; font-size: 13.5px; font-weight: 800; border-top: 1px solid rgba(0, 137, 123, 0.3); white-space: nowrap; color: #ffffff; }
+    tr:hover td { background-color: rgba(230, 230, 0, 0.12); }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- Application Header -->
+  <header id="main-header" class="sticky top-0 z-30 flex flex-wrap items-center justify-between px-4 sm:px-6 py-3 gap-2" style="background: linear-gradient(180deg, #004D40, #00332c); border-bottom:2px solid #e6e600; box-shadow: 0 8px 24px rgba(0,0,0,0.7);">
+    <div class="flex items-center gap-3">
+      <!-- Shadowfax Logo Container -->
+      <div class="w-11 h-11 rounded-2xl flex items-center justify-center bg-[#00897B] border-2 border-[#e6e600] shadow-lg shadow-black/60 p-1">
+        <svg class="sfx-logo-svg w-8 h-8" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 25C20 22 23 20 26 21L80 43C83 44 83 48 80 50L62 62C60 63 58 63 57 61L48 44C47 42 44 42 43 44L31 75C30 78 26 79 24 76L20 70C19 68 19 27 20 25Z" fill="#E6E600"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-black tracking-wide text-base sm:text-lg text-white drop-shadow flex items-center gap-2">
+          <span>SHADOWFAX DC PORTAL</span>
+        </div>
+        <div id="top-greeting" class="text-[11px] font-black flex items-center gap-2 text-yellow-300"></div>
+      </div>
+    </div>
+    <div id="who" class="flex items-center gap-2 sm:gap-3 flex-wrap"></div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Main View Router Container -->
+  <main id="app" class="flex-1 p-3 sm:p-6 max-w-7xl w-full mx-auto"></main>
+
+  <!-- Modal Container -->
+  <div id="modal-container" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="modal-card" class="card max-w-lg w-full transform transition-all scale-95 opacity-0"></div>
+  </div>
+
+<script>
+// DOM Selector & Helpers
+const $ = s => document.querySelector(s);
+const today = new Date().toISOString().slice(0,10);
+const greet = () => { const h=new Date().getHours(); return h<12?'Good Morning':h<17?'Good Afternoon':h<22?'Good Evening':'Good Night'; };
+const nowT = () => new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+const formatTimeString = (timeStr) => {
+  if (!timeStr || timeStr === '--') return '--';
+  const parts = timeStr.split(':');
+  if (parts.length < 2) return timeStr;
+  let hours = parseInt(parts[0], 10);
+  const minutes = parts[1];
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const strHours = hours < 10 ? '0' + hours : hours;
+  return `${strHours}:${minutes} ${ampm}`;
+};
+const badge = (t, ok) => `<span class="pill-3d ${ok ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'}">${t}</span>`;
+
+function toast(msg, type = 'info') {
+  const container = $('#toast-container');
+  if (!container) return;
+  const div = document.createElement('div');
+  div.className = `px-4 py-2.5 rounded-xl text-xs font-black shadow-lg pointer-events-auto transition-all transform translate-y-2 opacity-0 flex items-center gap-2 border ${
+    type === 'success' ? 'bg-emerald-950 text-emerald-300 border-emerald-700' : 
+    type === 'error' ? 'bg-rose-950 text-rose-300 border-rose-700' : 'bg-slate-900 text-amber-300 border-amber-500/50'
+  }`;
+  div.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-info'}"></i> ${msg}`;
+  container.appendChild(div);
+  setTimeout(() => { div.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+  setTimeout(() => {
+    div.classList.add('opacity-0', 'translate-y-2');
+    setTimeout(() => div.remove(), 200);
+  }, 2800);
+}
+
+function openModal(html) {
+  const overlay = $('#modal-container');
+  const card = $('#modal-card');
+  card.innerHTML = html;
+  overlay.classList.remove('hidden');
+  setTimeout(() => card.classList.remove('scale-95', 'opacity-0'), 10);
+}
+
+function closeModal() {
+  const overlay = $('#modal-container');
+  const card = $('#modal-card');
+  card.classList.add('scale-95', 'opacity-0');
+  setTimeout(() => overlay.classList.add('hidden'), 150);
+}
+
+function filterData(list, fields) {
+  if (!S.searchQuery) return list;
+  const q = S.searchQuery.toLowerCase();
+  return list.filter(item => fields.some(f => String(item[f] || '').toLowerCase().includes(q)));
+}
+
+function tbl(headers, rows) {
+  return `
+    <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/60 backdrop-blur-md shadow-xl">
+      <table class="w-full text-left">
+        <thead class="bg-gradient-to-r from-[#050C18] to-[#0a182e] border-b border-slate-800">
+          <tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>
+        </thead>
+        <tbody>${rows.length ? rows.join('') : `<tr><td colspan="${headers.length}" class="text-center py-6 text-slate-500">No records found.</td></tr>`}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// State Store & Initial Data
+const S = {
+  user: null,
+  tab: 'sum',
+  date: today,
+  searchQuery: '',
+  showClosedSec: false,
+  showClosedKmSec: false,
+  showPassword: false,
+  err: '',
+  punched: false,
+  deps: [
+    {id:'TRP0DDTQY9U', sl: 1, veh:'WB19L2623', lane:'CDL-BBI', type:'Zonal NDD', fleet:'14 FT', std:'09:00 PM', atp:'08:45 PM', atd:'09:01 PM', sta:'12:00 PM', ata:'11:55 AM', unloadTime:'00:45', closed:'Yes', status:'Closed', allow:false, date:today, lockedFields:{atp:true,atd:true,ata:true,unloadTime:true,closed:true}},
+    {id:'TRP4DCIZ38G', sl: 2, veh:'RJ14GR9991', lane:'NAG-BBI', type:'National Regular', fleet:'32FT', std:'05:00 PM', atp:'04:30 PM', atd:'05:36 PM', sta:'02:00 PM', ata:'12:15 PM', unloadTime:'01:10', closed:'Yes', status:'Closed', allow:false, date:today, lockedFields:{atp:true,atd:true,ata:true,unloadTime:true,closed:true}},
+    {id:'TRP3O2O3ZSR', sl: 3, veh:'HR55BE6360', lane:'KOL-STV', type:'National Regular', fleet:'32FT', std:'07:00 PM', atp:'06:50 PM', atd:'09:58 PM', sta:'05:00 PM', ata:'05:45 PM', unloadTime:'00:50', closed:'Yes', status:'Closed', allow:false, date:today, lockedFields:{atp:true,atd:true,ata:true,unloadTime:true,closed:true}},
+    {id:'TRP9XLS5508', sl: 4, veh:'UP78LN0409', lane:'KOL-VTZ', type:'National Regular', fleet:'32FT', std:'08:00 PM', atp:'--', atd:'--', sta:'06:00 PM', ata:'--', unloadTime:'--', closed:'No', status:'In Transit', allow:false, date:today, lockedFields:{atp:false,atd:false,ata:false,unloadTime:false,closed:false}}
+  ],
+  att: [
+    {id:'SFE1082', name:'Jane Doe', in:'09:02 AM', out:'--', status:'Present'},
+    {id:'SFE1044', name:'Rahul Verma', in:'08:55 AM', out:'05:00 PM', status:'Present'},
+    {id:'SFE1098', name:'Manish Tripathi', in:'09:15 AM', out:'--', status:'Present'}
+  ],
+  tms: [
+    {lane:'CDL-BBI', fleet:'14 FT', stp:'08:00 AM', std:'09:00 PM', sta:'12:00 PM'},
+    {lane:'NAG-BBI', fleet:'32FT', stp:'09:30 AM', std:'05:00 PM', sta:'02:00 PM'},
+    {lane:'KOL-STV', fleet:'32FT', stp:'01:00 PM', std:'07:00 PM', sta:'05:00 PM'},
+    {lane:'KOL-VTZ', fleet:'32FT', stp:'02:30 PM', std:'08:00 PM', sta:'06:00 PM'}
+  ],
+  regs: [
+    {id:'SFE1098', name:'Manish Tripathi', role:'Employee', des:'Team Leader', pass:'Mpass123', status:'Pending'},
+    {id:'SFE1082', name:'Jane Doe', role:'Employee', des:'Ground Coordinator', pass:'JanePass99', status:'Approved'},
+    {id:'SFE1044', name:'Rahul Verma', role:'Employee', des:'Acting TL', pass:'RahulPass44', status:'Approved'},
+    {id:'SEC007', name:'Security Supervisor', role:'Security', des:'Guard', pass:'SecPass007', status:'Approved'}
+  ],
+  pwdResets: [
+    {id:'RESET-101', empId:'SFE1082', name:'Jane Doe', newPass:'NewJane77', status:'Pending'}
+  ],
+  vis: [
+    {id:'VIS-101', name:'Amit Kumar', from:'TechLogistics Pvt Ltd', host:'Jane Doe', purpose:'Vendor Meeting', in:'10:00 AM', out:'--', status:'Pending Approval', date:today},
+    {id:'VIS-102', name:'Suresh Swain', from:'Safety Inspection Bureau', host:'Rahul Verma', purpose:'Safety Audit', in:'11:30 AM', out:'01:15 PM', status:'Completed', date:today}
+  ],
+  ext: [
+    {id:'EXT-01', emp:'SFE1082', name:'Jane Doe', range:'18:00 - 20:00', hrs:'2h 00m', remarks:'Sorting excess incoming parcels', status:'Pending'},
+    {id:'EXT-02', emp:'SFE1044', name:'Rahul Verma', range:'17:00 - 19:00', hrs:'2h 00m', remarks:'Audit verification backlog', status:'Approved'}
+  ],
+  lev: [
+    {id:'LEV-01', emp:'SFE1082', name:'Jane Doe', range:'2026-11-10 to 2026-11-12', reason:'Family event', status:'Pending'}
+  ],
+  tix: [
+    {id:'TCK-801', emp:'SFE1082', cat:'Salary issue', details:'OT allowance discrepancy for Oct shift', status:'Open'}
+  ],
+  km: [
+    {id:'VEH-901', date:today, veh:'OD-02-AX-8812', lane:'Bhubneshwar DC_BBS_Rasolgarh', s:45210, e:45285, perm:false},
+    {id:'VEH-902', date:today, veh:'OD-02-B-4411', lane:'Bhubneshwar DC_BBS_Chandrasekharpur', s:18400, e:null, perm:true}
+  ],
+  hist: [
+    ['05-Nov 10:45 AM', 'WB19L2623', 'TRP0DDTQY9U', 'ATP', '--', '11:55 AM'],
+    ['05-Nov 11:20 AM', 'RJ14GR9991', 'TRP4DCIZ38G', 'ATD', '05:00 PM', '05:36 PM'],
+    ['05-Nov 09:10 AM', 'OD-02-AX-8812', 'KM-VEH-901', 'Start KM', '45150 KM', '45210 KM']
+  ],
+  tmsHist: [],
+  edTms: null
+};
+
+function getLogoSVG(sizeClass = 'w-6 h-6') {
+  return `
+    <svg class="sfx-logo-svg ${sizeClass}" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 25C20 22 23 20 26 21L80 43C83 44 83 48 80 50L62 62C60 63 58 63 57 61L48 44C47 42 44 42 43 44L31 75C30 78 26 79 24 76L20 70C19 68 19 27 20 25Z" fill="#E6E600"/>
+    </svg>
+  `;
+}
+
+function acts(k, item, pSt, aSt, rSt) {
+  if (item.status === pSt) {
+    return `<div class="flex items-center gap-1.5">
+      <button onclick="setSt('${k}','${item.id}','${aSt}')" class="pill-3d bg-gradient-to-b from-emerald-500/30 to-emerald-700/30 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-500/40"><i class="fa-solid fa-circle-check"></i> Approve</button>
+      ${rSt ? `<button onclick="setSt('${k}','${item.id}','${rSt}')" class="pill-3d bg-gradient-to-b from-rose-500/30 to-rose-700/30 text-rose-300 border border-rose-500/50 hover:bg-rose-500/40"><i class="fa-solid fa-circle-xmark"></i> Reject</button>` : ''}
+    </div>`;
+  }
+  return badge(item.status, item.status === aSt);
+}
+
+function exportCSV(filename, headers, rows) {
+  if (!rows || !rows.length) {
+    toast('No data available to export', 'error');
+    return;
+  }
+  const csvContent = [
+    headers.join(','),
+    ...rows.map(row => row.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
+  ].join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', `${filename}_${S.date || 'all'}_${today}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  toast(`Exported ${filename}.csv`, 'success');
+}
+
+function exportSecurityDepartures() {
+  let list = S.deps.filter(d => !S.date || d.date === S.date);
+  list = filterData(list, ['veh', 'id', 'lane', 'type', 'status']);
+  const headers = ['Date', 'Vehicle Number', 'Lane', 'ATP', 'ATD', 'ATA', 'Unloading Time', 'Trip Closer Status'];
+  const rows = list.map(d => [d.date, d.veh, d.lane, d.atp || '--', d.atd || '--', d.ata || '--', d.unloadTime || '--', d.closed === 'Yes' ? 'Yes (Closed)' : 'No (Open)']);
+  exportCSV('Security_Gate_Departures_Full', headers, rows);
+}
+
+function exportSecurityKmLogs() {
+  let list = S.km.filter(k => !S.date || k.date === S.date);
+  list = filterData(list, ['veh', 'lane', 'date']);
+  const headers = ['Log Date', 'Vehicle Number', 'Lane / Route', 'Start KM', 'End KM', 'Distance (KM)', 'Status'];
+  const rows = list.map(v => [v.date || today, v.veh, v.lane || '--', v.s, v.e || '--', v.e ? (v.e - v.s) : '--', v.e && !v.perm ? 'Completed & Locked' : 'Active']);
+  exportCSV('Security_Odometer_KM_Logs_Full', headers, rows);
+}
+
+function exportSecurityVisitors() {
+  let list = S.vis.filter(v => !S.date || (v.date ? v.date === S.date : true));
+  list = filterData(list, ['id', 'name', 'from', 'host']);
+  const headers = ['Pass ID', 'Visitor Name', 'Coming From', 'Host Employee', 'Purpose of Visit', 'Check-In', 'Check-Out', 'Status'];
+  const rows = list.map(v => [v.id, v.name, v.from || '--', v.host, v.purpose, v.in, v.out, v.status]);
+  exportCSV('Security_Visitor_Verification_Logs', headers, rows);
+}
+
+function exportManagerDepartures() {
+  let list = S.deps.filter(d => !S.date || d.date === S.date);
+  list = filterData(list, ['veh', 'id', 'lane', 'type', 'status']);
+  const headers = ['SL', 'Date', 'Vehicle Number', 'Trip ID', 'Lane', 'Type', 'Fleet', 'STP', 'STD', 'ATP', 'ATD', 'STA', 'ATA', 'Unloading Time', 'Closed', 'Status'];
+  const rows = list.map(d => {
+    const liveD = live(d);
+    return [
+      d.sl || '-', d.date, d.veh, d.id, d.lane, d.type || '-', liveD.fleet || '-', liveD.stp || '-', liveD.std || '-',
+      d.atp || '--', d.atd || '--', liveD.sta || '-', d.ata || '--', d.unloadTime || '--', d.closed || 'No', d.status
+    ];
+  });
+  exportCSV('Manager_Vehicle_Departures_Register', headers, rows);
+}
+
+function calcTotalHours(inTime, outTime) {
+  if (!inTime || !outTime || inTime === '--' || outTime === '--') return '--';
+  const parseTimeStr = (tStr) => {
+    const match = tStr.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match) return null;
+    let h = parseInt(match[1], 10);
+    const m = parseInt(match[2], 10);
+    const ampm = match[3].toUpperCase();
+    if (ampm === 'PM' && h < 12) h += 12;
+    if (ampm === 'AM' && h === 12) h = 0;
+    return h * 60 + m;
+  };
+  const inMins = parseTimeStr(inTime);
+  const outMins = parseTimeStr(outTime);
+  if (inMins === null || outMins === null) return '--';
+  let diff = outMins - inMins;
+  if (diff < 0) diff += 24 * 60;
+  const hrs = Math.floor(diff / 60);
+  const mins = diff % 60;
+  return `${hrs}h ${String(mins).padStart(2, '0')}m`;
+}
+
+function setSt(k, id, st) {
+  const item = S[k].find(x => x.id === id);
+  if (item) {
+    item.status = st;
+    toast(`Status updated for ${id} to ${st}`, 'success');
+  }
+  render();
+}
+
+function togKm(id) {
+  const k = S.km.find(x => x.id === id);
+  if (k) {
+    k.perm = !k.perm;
+    toast(`Security KM access for ${k.veh} set to ${k.perm ? 'Granted' : 'Locked'}`);
+  }
+  render();
+}
+
+function submitKmLog(e) {
+  e.preventDefault();
+  const f = e.target;
+  const targetId = f.id.value;
+  let k = S.km.find(x => x.id === targetId);
+  if (!k) {
+    k = { id: 'VEH-' + Math.floor(100 + Math.random() * 900), perm: true };
+    S.km.unshift(k);
+  }
+  k.date = f.date.value || today;
+  k.veh = f.veh.value.trim().toUpperCase();
+  k.lane = f.lane.value;
+  k.s = parseInt(f.s.value);
+  const endVal = f.e.value ? parseInt(f.e.value) : null;
+  k.e = endVal;
+  
+  if (endVal !== null && !isNaN(endVal)) {
+    k.perm = false;
+    toast(`End Odometer recorded (${endVal} KM) for ${k.veh}. Log locked & hidden.`, 'success');
+  } else {
+    toast(`Updated Odometer log for ${k.veh}`, 'success');
+  }
+  S.hist.unshift([
+    new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}),
+    k.veh, 'KM-LOG', 'KM Update', `${k.s} KM`, k.e ? `${k.e} KM` : '--'
+  ]);
+  closeModal();
+  render();
+}
+
+function openKmLogModal(id) {
+  const k = id ? S.km.find(x => x.id === id) : { id: '', date: today, veh: '', lane: 'Bhubneshwar DC_BBS_Rasolgarh', s: '', e: '', perm: true };
+  const laneOptions = [
+    'Bhubneshwar DC_SURM_Salepur_SCC',
+    'Bhubneshwar DC_BBS_Rasolgarh',
+    'Bhubneshwar DC-MACR_Choudwar',
+    'Bhubneshwar DC_KUR_JatniSR_SCC',
+    'Bhubneshwar DC_BBS_Chandrasekharpur',
+    'Bhubneshwar DC-BBS_Oldtown_SCC',
+    'Bhubneshwar DC-BBS_GopalpurTD_SCC',
+    'Bhubneshwar DC-BBS_AdaspurJS_SCC',
+    'Bhubneshwar DC_BBS_Bhubneswar_Large'
+  ];
+
+  openModal(`
+    <div class="flex items-center gap-3 mb-4">
+      <div class="icon-box-3d bg-gradient-to-br from-cyan-500/30 to-cyan-900/40 text-cyan-400">
+        <i class="fa-solid fa-gauge-high"></i>
+      </div>
+      <div>
+        <h3 class="font-black text-lg text-white">${id ? 'Update' : 'New'} Vehicle Odometer (KM) Log</h3>
+        <p class="text-xs text-slate-400">Record initial or closing mileage details</p>
+      </div>
+    </div>
+    <form onsubmit="submitKmLog(event)" class="space-y-3">
+      <input type="hidden" name="id" value="${k.id}">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Log Date</label>
+          <input name="date" type="date" required value="${k.date || today}" class="inp-3d font-mono">
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Vehicle Number</label>
+          <input name="veh" type="text" required value="${k.veh || ''}" placeholder="e.g. OD-02-AX-8812" class="inp-3d font-bold font-mono text-cyan-300" ${id && k.veh ? 'readonly' : ''}>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Select Lane / Destination</label>
+        <select name="lane" required class="inp-3d font-bold text-amber-400">
+          ${laneOptions.map(l => `<option value="${l}" ${k.lane === l ? 'selected' : ''}>${l}</option>`).join('')}
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Start Odometer (KM)</label>
+          <input name="s" type="number" required value="${k.s !== undefined && k.s !== null ? k.s : ''}" placeholder="Start KM" class="inp-3d font-mono">
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">End Odometer (KM)</label>
+          <input name="e" type="number" value="${k.e || ''}" placeholder="End KM (Submitting locks entry)" class="inp-3d font-mono">
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">Cancel</button>
+        <button type="submit" class="btn-3d"><i class="fa-solid fa-floppy-disk"></i> Submit Odometer Log</button>
+      </div>
+    </form>
+  `);
+}
+
+function openVisitorModal() {
+  openModal(`
+    <div class="flex items-center gap-3 mb-4">
+      <div class="icon-box-3d bg-gradient-to-br from-emerald-500/30 to-emerald-900/40 text-emerald-400">
+        <i class="fa-solid fa-id-badge"></i>
+      </div>
+      <div>
+        <h3 class="font-black text-lg text-white">Register New Gate Visitor</h3>
+        <p class="text-xs text-slate-400">Creates a verification record for manager approval</p>
+      </div>
+    </div>
+    <form onsubmit="submitVisitor(event)" class="space-y-3">
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Visitor Full Name</label>
+        <input name="vname" type="text" required placeholder="e.g. Rakesh Sharma" class="inp-3d">
+      </div>
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Coming From (Organization / City)</label>
+        <input name="vfrom" type="text" required placeholder="e.g. BlueDart Operations / Cuttack" class="inp-3d">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Host Employee</label>
+          <input name="vhost" type="text" required placeholder="e.g. Jane Doe" class="inp-3d">
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Purpose of Visit</label>
+          <input name="vpurpose" type="text" required placeholder="e.g. Audit / Tech Support" class="inp-3d">
+        </div>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">Cancel</button>
+        <button type="submit" class="btn-3d"><i class="fa-solid fa-user-check"></i> Register Visitor</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitVisitor(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newVis = {
+    id: 'VIS-' + Math.floor(100 + Math.random() * 900),
+    name: f.vname.value.trim(),
+    from: f.vfrom.value.trim(),
+    host: f.vhost.value.trim(),
+    purpose: f.vpurpose.value.trim(),
+    in: '--',
+    out: '--',
+    status: 'Pending Approval',
+    date: today
+  };
+  S.vis.unshift(newVis);
+  toast(`Visitor pass registered for ${newVis.name}. Sent for Manager Approval.`, 'info');
+  closeModal();
+  render();
+}
+
+function visitorCheckIn(id) {
+  const v = S.vis.find(x => x.id === id);
+  if (v) {
+    v.in = nowT();
+    v.status = 'Checked In';
+    toast(`Checked in visitor: ${v.name} at ${v.in}`, 'success');
+  }
+  render();
+}
+
+function visitorCheckOut(id) {
+  const v = S.vis.find(x => x.id === id);
+  if (v) {
+    v.out = nowT();
+    v.status = 'Completed';
+    toast(`Checked out visitor: ${v.name} at ${v.out}`, 'info');
+  }
+  render();
+}
+
+function login(e) {
+  if (e) e.preventDefault();
+  const uEl = $('#u');
+  const pEl = $('#p');
+  const u = uEl ? uEl.value.trim().toLowerCase() : '';
+  const p = pEl ? pEl.value : '';
+
+  if (!u) {
+    S.err = 'Please enter a valid Username or Employee ID.';
+    return render();
+  }
+
+  // Master Manager Access
+  if (u === 'admin' || u === 'manager') {
+    S.user = { name: 'Portal Admin / Manager', role: 'Manager', empId: 'MGR001' };
+  } else {
+    // Registered User Verification
+    const f = S.regs.find(r => r.id.toLowerCase() === u);
+    if (!f) {
+      S.err = 'User ID not registered. Please submit New User Registration for access.';
+      return render();
+    }
+    if (f.status !== 'Approved') {
+      S.err = 'Registration pending manager approval. Access denied.';
+      return render();
+    }
+    if (f.pass && p && f.pass !== p) {
+      S.err = 'Incorrect password entered.';
+      return render();
+    }
+    S.user = { name: f.name, role: f.role, empId: f.id };
+  }
+
+  S.err = '';
+  S.tab = S.user.role === 'Manager' ? 'sum' : S.user.role === 'Security' ? 'dep' : 'punch';
+  toast(`Logged in as ${S.user.name} (${S.user.role})`, 'success');
+  render();
+}
+
+function quickLogin(roleKey) {
+  if (roleKey === 'admin') {
+    S.user = { name: 'Portal Admin / Manager', role: 'Manager', empId: 'MGR001' };
+  } else if (roleKey === 'sec') {
+    S.user = { name: 'Security Supervisor', role: 'Security', empId: 'SEC007' };
+  } else if (roleKey === 'emp') {
+    S.user = { name: 'Jane Doe', role: 'Employee', empId: 'SFE1082' };
+  }
+  S.err = '';
+  S.tab = S.user.role === 'Manager' ? 'sum' : S.user.role === 'Security' ? 'dep' : 'punch';
+  toast(`Logged in as ${S.user.name} (${S.user.role})`, 'success');
+  render();
+}
+
+function delReg(id) {
+  S.regs = S.regs.filter(x => x.id !== id);
+  toast(`User account ${id} deleted by Manager`, 'success');
+  render();
+}
+
+function approvePasswordReset(resetId, approve) {
+  const r = S.pwdResets.find(x => x.id === resetId);
+  if (r) {
+    if (approve) {
+      const userObj = S.regs.find(u => u.id === r.empId);
+      if (userObj) {
+        userObj.pass = r.newPass;
+      }
+      r.status = 'Approved';
+      toast(`Password reset approved for ${r.name} (${r.empId})`, 'success');
+    } else {
+      r.status = 'Rejected';
+      toast(`Password reset request rejected`, 'info');
+    }
+  }
+  render();
+}
+
+function logout() {
+  S.user = null;
+  S.searchQuery = '';
+  S.err = '';
+  toast('Logged out successfully');
+  render();
+}
+
+function setTab(t) { S.tab = t; render(); }
+function setDate(v) { S.date = v; render(); }
+
+function toggleAllow(id) {
+  const d = S.deps.find(x => x.id === id);
+  if (d) {
+    d.allow = !d.allow;
+    toast(`Gate stamp override for ${d.veh} set to ${d.allow ? 'Unlocked' : 'Locked'}`);
+  }
+  render();
+}
+
+function stamp(id, f) {
+  const d = S.deps.find(x => x.id === id);
+  if (d) {
+    d[f] = nowT();
+    if (f === 'ata') d.status = 'Closed';
+    d.allow = false;
+    toast(`Stamped ${f.toUpperCase()} for ${d.veh} at ${d[f]}`, 'success');
+    S.hist.unshift([
+      new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}),
+      d.veh, d.id, f.toUpperCase(), '--', d[f]
+    ]);
+  }
+  render();
+}
+
+function delDep(id) {
+  S.deps = S.deps.filter(x => x.id !== id);
+  toast('Dispatch entry deleted');
+  render();
+}
+
+function setReg(id, s) {
+  const r = S.regs.find(x => x.id === id);
+  if (r) {
+    r.status = s;
+    toast(`User registration for ${r.name} ${s}`, 'success');
+  }
+  render();
+}
+
+function punch() {
+  S.punched = !S.punched;
+  const empId = S.user ? S.user.empId : 'SFE1082';
+  let a = S.att.find(x => x.id === empId);
+  if (!a) {
+    a = { id: empId, name: S.user ? S.user.name : 'Jane Doe', in: '--', out: '--', status: 'Present' };
+    S.att.push(a);
+  }
+  if (S.punched) {
+    a.in = nowT();
+    a.out = '--';
+    toast('Punched IN successfully via Biometrics', 'success');
+  } else {
+    a.out = nowT();
+    toast('Punched OUT successfully', 'info');
+  }
+  render();
+}
+
+const ET = () => S.tms.find(x => x.lane === S.edTms) || {};
+const tmv = v => {
+  const n = Number(v);
+  if (v !== '' && v != null && !isNaN(n) && n >= 0 && n <= 1) {
+    const s = Math.round(n * 1440), h = Math.floor(s / 60), m = s % 60;
+    return String(h % 12 || 12).padStart(2, '0') + ':' + String(m).padStart(2, '0') + (h >= 12 ? ' PM' : ' AM');
+  }
+  return String(v == null ? '' : v).trim();
+};
+
+function live(d) {
+  const m = S.tms.find(t => t.lane.toLowerCase() === String(d.lane).trim().toLowerCase());
+  return m ? { ...d, fleet: m.fleet, stp: m.stp, std: m.std, sta: m.sta } : d;
+}
+
+function logT(lane, field, o, n) {
+  S.tmsHist.unshift([
+    new Date().toLocaleString([], {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'}),
+    S.user ? S.user.name : '-', lane, field, o, n
+  ]);
+}
+
+function upsertTms(r) {
+  const t = S.tms.find(x => x.lane.toLowerCase() === r.lane.toLowerCase());
+  if (!t) {
+    S.tms.unshift(r);
+    logT(r.lane, 'New Lane Catalog', '-', [r.fleet, r.stp, r.std, r.sta].join(' | '));
+    return;
+  }
+  [['fleet','Fleet Size'], ['stp','STP'], ['std','STD'], ['sta','STA']].forEach(([k,l]) => {
+    if (r[k] && t[k] !== r[k]) {
+      logT(t.lane, l, t[k], r[k]);
+      t[k] = r[k];
+    }
+  });
+}
+
+function saveTms(e) {
+  e.preventDefault();
+  const f = e.target;
+  const r = {
+    lane: f.lane.value.trim(),
+    fleet: f.fleet.value.trim(),
+    stp: f.stp.value.trim(),
+    std: f.std.value.trim(),
+    sta: f.sta.value.trim()
+  };
+  const old = S.edTms;
+  if (old && old !== r.lane) {
+    const t = S.tms.find(x => x.lane === old);
+    if (t) { logT(old, 'Lane Renamed', old, r.lane); t.lane = r.lane; }
+  }
+  upsertTms(r);
+  S.edTms = null;
+  toast('TMS catalog updated successfully', 'success');
+  render();
+}
+
+function editTms(l) { S.edTms = l; render(); }
+function cancelTms() { S.edTms = null; render(); }
+function delTms(l) {
+  S.tms = S.tms.filter(t => t.lane !== l);
+  logT(l, 'Lane Removed', '-', '-');
+  toast('TMS line deleted');
+  render();
+}
+
+async function impTms(inp) {
+  const f = inp.files[0];
+  if (!f) return;
+  let rows = [];
+  if (f.name.toLowerCase().endsWith('.csv')) {
+    rows = (await f.text()).split(/\r?\n/).filter(Boolean).map(l => l.split(/,|\t/).map(c => c.trim().replace(/^"|"$/g,'')));
+  } else if (window.XLSX) {
+    const wb = XLSX.read(await f.arrayBuffer());
+    rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+  }
+  rows.slice(1).forEach(r => {
+    if (r && r[0]) upsertTms({ lane: String(r[0]).trim(), fleet: String(r[1] || '').trim(), stp: tmv(r[2]), std: tmv(r[3]), sta: tmv(r[4]) });
+  });
+  inp.value = '';
+  toast('Bulk TMS imported successfully', 'success');
+  render();
+}
+
+async function imp(inp) {
+  const f = inp.files[0];
+  if (!f) return;
+  let rows = [];
+  if (f.name.toLowerCase().endsWith('.csv')) {
+    rows = (await f.text()).split(/\r?\n/).filter(Boolean).map(l => l.split(/,|\t/).map(c => c.trim().replace(/^"|"$/g,'')));
+  } else if (window.XLSX) {
+    const wb = XLSX.read(await f.arrayBuffer());
+    rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+  }
+  rows.slice(1).forEach(r => {
+    if (r && r[0] && r[1]) {
+      S.deps.unshift(mk({
+        date: r[0] || today,
+        veh: String(r[1]).trim().toUpperCase(),
+        trip: String(r[2] || '').trim(),
+        lane: String(r[3] || '').trim(),
+        type: String(r[4] || '').trim()
+      }));
+    }
+  });
+  inp.value = '';
+  toast('Bulk Dispatches imported successfully', 'success');
+  render();
+}
+
+function mk(o) {
+  const m = S.tms.find(t => t.lane.toLowerCase() === String(o.lane).trim().toLowerCase()) || {};
+  return {
+    sl: o.sl || S.deps.length + 1,
+    id: o.trip || 'TRP' + Math.floor(100000 + Math.random() * 900000),
+    veh: o.veh,
+    lane: o.lane,
+    type: o.type || '-',
+    fleet: m.fleet || '-',
+    stp: m.stp || '-',
+    std: m.std || '-',
+    sta: m.sta || '-',
+    atp: '--',
+    atd: '--',
+    ata: '--',
+    unloadTime: '--',
+    closed: 'No',
+    status: 'In Transit',
+    allow: false,
+    date: o.date
+  };
+}
+
+function updateGateTimes(id, field, value) {
+  const d = S.deps.find(x => x.id === id);
+  if (!d) return;
+  if (!d.lockedFields) d.lockedFields = {atp:false,atd:false,ata:false,unloadTime:false,closed:false};
+
+  if (field === 'closed') {
+    d.closed = value;
+    d.status = value === 'Yes' ? 'Closed' : 'In Transit';
+    d.lockedFields.closed = true;
+    toast(`Trip ${d.id} closer status set to: ${d.closed} & Locked`, 'info');
+  } else {
+    d[field] = value ? formatTimeString(value) : '--';
+    d.lockedFields[field] = true;
+    toast(`Updated & locked ${field.toUpperCase()} for ${d.veh}: ${d[field]}`, 'success');
+  }
+  
+  S.hist.unshift([
+    new Date().toLocaleString([],{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}),
+    d.veh, d.id, field.toUpperCase(), '--', d[field]
+  ]);
+  render();
+}
+
+function isTripFullyCompleted(d) {
+  const hasAtp = d.atp && d.atp !== '--';
+  const hasAtd = d.atd && d.atd !== '--';
+  const hasAta = d.ata && d.ata !== '--';
+  const hasUnload = d.unloadTime && d.unloadTime !== '--';
+  const isClosed = d.closed === 'Yes' || d.status === 'Closed';
+  return hasAtp && hasAtd && hasAta && hasUnload && isClosed;
+}
+
+function addDep(e) {
+  e.preventDefault();
+  const f = e.target;
+  S.deps.unshift(mk({
+    date: f.date.value || today,
+    veh: f.veh.value.trim().toUpperCase(),
+    trip: f.trip.value.trim(),
+    lane: f.lane.value.trim(),
+    type: f.type.value.trim()
+  }));
+  toast('New dispatch added', 'success');
+  render();
+}
+
+const depRows = (mode) => {
+  let list = S.deps.filter(d => !S.date || d.date === S.date);
+  if (mode === 'sec' && !S.showClosedSec) {
+    list = list.filter(d => !isTripFullyCompleted(d));
+  }
+  list = filterData(list, ['veh', 'id', 'lane', 'type', 'status']);
+
+  return list.map(d => {
+    d = live(d);
+    if (!d.lockedFields) d.lockedFields = {atp:false,atd:false,ata:false,unloadTime:false,closed:false};
+    
+    let act = '';
+    const isClosed = d.closed === 'Yes';
+    const fullyDone = isTripFullyCompleted(d);
+
+    if (mode === 'mgr') {
+      act = `<td>
+        <button onclick="toggleAllow('${d.id}')" class="pill-3d ${d.allow ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'}">
+          <i class="fa-solid ${d.allow ? 'fa-lock-open' : 'fa-lock'}"></i> ${d.allow ? 'Unlocked' : 'Locked'}
+        </button>
+        <button onclick="delDep('${d.id}')" class="pill-3d bg-slate-800 text-slate-400 hover:text-rose-400"><i class="fa-solid fa-trash-can"></i></button>
+      </td>`;
+    } else {
+      const canEdit = !fullyDone || d.allow;
+      act = `<td>
+        ${canEdit ? `
+          <div class="flex items-center gap-1">
+            <button class="pill-3d bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30" onclick="stamp('${d.id}','atd')"><i class="fa-solid fa-clock"></i> Quick ATD</button>
+            <button class="pill-3d bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30" onclick="stamp('${d.id}','ata')"><i class="fa-solid fa-flag-checkered"></i> Quick ATA</button>
+          </div>
+        ` : '<span class="text-slate-500 text-xs font-mono"><i class="fa-solid fa-lock"></i> Locked</span>'}
+      </td>`;
+    }
+
+    const inputDisabled = (fName) => mode === 'sec' && !d.allow && (d.lockedFields[fName] || fullyDone);
+
+    if (mode === 'sec') {
+      return `<tr>
+        <td class="font-mono text-slate-300">${d.date}</td>
+        <td class="font-mono font-black text-amber-400">${d.veh}</td>
+        <td class="font-bold text-slate-200">${d.lane}</td>
+        
+        <td>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-mono text-teal-300 font-bold">${d.atp || '--'}</span>
+            ${!inputDisabled('atp') ? `
+              <input type="time" id="inp_atp_${d.id}" class="inp-3d py-0.5 px-1.5 text-[11px] w-20">
+              <button onclick="updateGateTimes('${d.id}', 'atp', document.getElementById('inp_atp_${d.id}').value)" class="pill-3d bg-teal-500/20 text-teal-300 border border-teal-500/40 hover:bg-teal-500/30 px-2"><i class="fa-solid fa-check"></i></button>
+            ` : '<span class="text-slate-500 text-[10px] font-mono"><i class="fa-solid fa-lock"></i></span>'}
+          </div>
+        </td>
+
+        <td>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-mono text-rose-400 font-bold">${d.atd || '--'}</span>
+            ${!inputDisabled('atd') ? `
+              <input type="time" id="inp_atd_${d.id}" class="inp-3d py-0.5 px-1.5 text-[11px] w-20">
+              <button onclick="updateGateTimes('${d.id}', 'atd', document.getElementById('inp_atd_${d.id}').value)" class="pill-3d bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30 px-2"><i class="fa-solid fa-check"></i></button>
+            ` : '<span class="text-slate-500 text-[10px] font-mono"><i class="fa-solid fa-lock"></i></span>'}
+          </div>
+        </td>
+
+        <td>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-mono text-cyan-400 font-bold">${d.ata || '--'}</span>
+            ${!inputDisabled('ata') ? `
+              <input type="time" id="inp_ata_${d.id}" class="inp-3d py-0.5 px-1.5 text-[11px] w-20">
+              <button onclick="updateGateTimes('${d.id}', 'ata', document.getElementById('inp_ata_${d.id}').value)" class="pill-3d bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 px-2"><i class="fa-solid fa-check"></i></button>
+            ` : '<span class="text-slate-500 text-[10px] font-mono"><i class="fa-solid fa-lock"></i></span>'}
+          </div>
+        </td>
+
+        <td>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-mono text-purple-300 font-bold">${d.unloadTime || '--'}</span>
+            ${!inputDisabled('unloadTime') ? `
+              <input type="time" id="inp_unload_${d.id}" class="inp-3d py-0.5 px-1.5 text-[11px] w-20">
+              <button onclick="updateGateTimes('${d.id}', 'unloadTime', document.getElementById('inp_unload_${d.id}').value)" class="pill-3d bg-purple-500/20 text-purple-300 border border-purple-500/40 hover:bg-purple-500/30 px-2"><i class="fa-solid fa-check"></i></button>
+            ` : '<span class="text-slate-500 text-[10px] font-mono"><i class="fa-solid fa-lock"></i></span>'}
+          </div>
+        </td>
+
+        <td>
+          ${!inputDisabled('closed') ? `
+            <select class="inp-3d py-0.5 px-2 text-xs font-bold ${d.closed === 'Yes' ? 'text-emerald-400 border-emerald-500/50' : 'text-amber-400 border-amber-500/50'}"
+                    onchange="updateGateTimes('${d.id}', 'closed', this.value)">
+              <option value="No" ${d.closed === 'No' ? 'selected' : ''}>No (Open)</option>
+              <option value="Yes" ${d.closed === 'Yes' ? 'selected' : ''}>Yes (Closed)</option>
+            </select>
+          ` : `<span class="pill-3d bg-emerald-500/20 text-emerald-400 font-bold"><i class="fa-solid fa-lock"></i> Yes (Closed)</span>`}
+        </td>
+      </tr>`;
+    }
+
+    return `<tr>
+      <td class="text-slate-400 font-mono">${d.sl || '-'}</td>
+      <td class="font-mono text-slate-300">${d.date}</td>
+      <td class="font-mono font-black text-amber-400">${d.veh}</td>
+      <td class="font-mono text-cyan-300 font-bold">${d.id}</td>
+      <td class="font-bold text-slate-200">${d.lane}</td>
+      <td>${d.type || '-'}</td>
+      <td>${d.fleet}</td>
+      <td>${d.stp || '-'}</td>
+      <td class="text-slate-300">${d.std}</td>
+      
+      <td>
+        <div class="flex items-center gap-1">
+          <span class="text-xs font-mono text-teal-300">${d.atp || '--'}</span>
+          <input type="time" class="inp-3d py-0.5 px-1 text-[10px] w-20 ${inputDisabled('atp') ? 'opacity-40 cursor-not-allowed' : ''}" 
+                 ${inputDisabled('atp') ? 'disabled' : ''} onchange="updateGateTimes('${d.id}', 'atp', this.value)">
+        </div>
+      </td>
+
+      <td>
+        <div class="flex items-center gap-1">
+          <span class="text-xs font-mono text-rose-400 font-bold">${d.atd || '--'}</span>
+          <input type="time" class="inp-3d py-0.5 px-1 text-[10px] w-20 ${inputDisabled('atd') ? 'opacity-40 cursor-not-allowed' : ''}" 
+                 ${inputDisabled('atd') ? 'disabled' : ''} onchange="updateGateTimes('${d.id}', 'atd', this.value)">
+        </div>
+      </td>
+
+      <td class="text-slate-300">${d.sta}</td>
+
+      <td>
+        <div class="flex items-center gap-1">
+          <span class="text-xs font-mono text-cyan-400 font-bold">${d.ata || '--'}</span>
+          <input type="time" class="inp-3d py-0.5 px-1 text-[10px] w-20 ${inputDisabled('ata') ? 'opacity-40 cursor-not-allowed' : ''}" 
+                 ${inputDisabled('ata') ? 'disabled' : ''} onchange="updateGateTimes('${d.id}', 'ata', this.value)">
+        </div>
+      </td>
+
+      <td>
+        <div class="flex items-center gap-1">
+          <span class="text-xs font-mono text-purple-300">${d.unloadTime || '--'}</span>
+          <input type="time" class="inp-3d py-0.5 px-1 text-[10px] w-20 ${inputDisabled('unloadTime') ? 'opacity-40 cursor-not-allowed' : ''}" 
+                 ${inputDisabled('unloadTime') ? 'disabled' : ''} onchange="updateGateTimes('${d.id}', 'unloadTime', this.value)">
+        </div>
+      </td>
+
+      <td>
+        <select class="inp-3d py-0.5 px-1 text-xs font-bold ${d.closed === 'Yes' ? 'text-emerald-400 border-emerald-500/50' : 'text-amber-400 border-amber-500/50'}"
+                ${inputDisabled('closed') ? 'disabled' : ''} onchange="updateGateTimes('${d.id}', 'closed', this.value)">
+          <option value="No" ${d.closed === 'No' ? 'selected' : ''}>No (Open)</option>
+          <option value="Yes" ${d.closed === 'Yes' ? 'selected' : ''}>Yes (Closed)</option>
+        </select>
+      </td>
+
+      <td>${badge(d.status, isClosed)}</td>
+      ${act}
+    </tr>`;
+  }).join('');
+};
+
+const depTable = (mode) => `
+  <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-950/60 backdrop-blur-md shadow-xl">
+    <table class="w-full text-left">
+      <thead class="bg-gradient-to-r from-[#050C18] to-[#0a182e] border-b border-slate-800">
+        ${mode === 'sec' ? `
+          <tr>
+            <th>Date</th><th>Vehicle Number</th><th>Lane</th>
+            <th>ATP</th><th>ATD</th><th>ATA</th><th>Unloading Time</th><th>Trip Closer Status</th>
+          </tr>
+        ` : `
+          <tr>
+            <th>SI</th><th>Date</th><th>Vehicle No</th><th>Trip ID</th><th>Lane</th>
+            <th>Type</th><th>Fleet</th><th>STP</th><th>STD</th>
+            <th>ATP (Manual)</th><th>ATD (Manual)</th><th>STA</th><th>ATA (Manual)</th><th>Unloading Time</th>
+            <th>Trip Closed?</th><th>Status</th><th>Gate Override</th>
+          </tr>
+        `}
+      </thead>
+      <tbody>${depRows(mode) || `<tr><td colspan="${mode === 'sec' ? 8 : 17}" class="text-center py-8 text-slate-500">No vehicle dispatches recorded for selected criteria.</td></tr>`}</tbody>
+    </table>
+  </div>
+`;
+
+function tabs(list) {
+  return `<div class="flex gap-2.5 overflow-x-auto pb-3 mb-5 border-b border-cyan-900/40">` +
+    list.map(([id, l, icon]) => `<button onclick="setTab('${id}')" class="px-4 py-2.5 rounded-2xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-2 ${S.tab===id ? 'btn-3d' : 'bg-gradient-to-b from-[#09223b] to-[#041221] text-cyan-200 border border-cyan-800/50 hover:bg-[#0c2b4c] hover:text-white shadow-md'}">
+      <i class="fa-solid ${icon || 'fa-folder'} text-sm"></i> ${l}
+    </button>`).join('') + `</div>`;
+}
+
+const dateBar = () => `
+  <div class="flex items-center gap-2 flex-wrap">
+    <div class="relative">
+      <input type="date" class="inp-3d font-mono text-xs py-1.5" style="width:auto" value="${S.date}" onchange="setDate(this.value)">
+    </div>
+    <button class="pill-3d bg-slate-800 text-slate-300 hover:bg-slate-700" onclick="setDate('')"><i class="fa-solid fa-calendar-day"></i> All dates</button>
+  </div>
+`;
+
+const searchBar = () => `
+  <div class="relative min-w-[200px]">
+    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-xs text-slate-400"></i>
+    <input type="text" placeholder="Search..." value="${S.searchQuery}" oninput="S.searchQuery=this.value; render();" class="inp-3d pl-9 py-1.5 text-xs">
+  </div>
+`;
+
+function submitExtension(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newExt = {
+    id: 'EXT-' + Math.floor(10 + Math.random() * 90),
+    emp: S.user.empId,
+    name: S.user.name,
+    range: f.start.value + ' - ' + f.end.value,
+    hrs: f.hrs.value + 'h',
+    remarks: f.remarks.value,
+    status: 'Pending'
+  };
+  S.ext.unshift(newExt);
+  toast('Shift Extension (OT) requested successfully', 'success');
+  render();
+}
+
+function calculateHours() {
+  const startVal = document.getElementById('ext_start')?.value;
+  const endVal = document.getElementById('ext_end')?.value;
+  const hrsInput = document.getElementById('ext_hrs');
+
+  if (startVal && endVal && hrsInput) {
+    const [sH, sM] = startVal.split(':').map(Number);
+    const [eH, eM] = endVal.split(':').map(Number);
+    
+    let startMinutes = sH * 60 + sM;
+    let endMinutes = eH * 60 + eM;
+
+    if (endMinutes < startMinutes) {
+      endMinutes += 24 * 60;
+    }
+
+    const diffMinutes = endMinutes - startMinutes;
+    const hours = (diffMinutes / 60).toFixed(2);
+    
+    const h = Math.floor(diffMinutes / 60);
+    const m = diffMinutes % 60;
+    hrsInput.value = `${h}h ${String(m).padStart(2, '0')}m (${hours} hrs)`;
+  }
+}
+
+function submitLeave(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newLev = {
+    id: 'LEV-' + Math.floor(10 + Math.random() * 90),
+    emp: S.user.empId,
+    name: S.user.name,
+    range: f.from.value + ' to ' + f.to.value,
+    reason: f.reason.value,
+    status: 'Pending'
+  };
+  S.lev.unshift(newLev);
+  toast('Leave application submitted for approval', 'success');
+  render();
+}
+
+function submitTicket(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newTix = {
+    id: 'TCK-' + Math.floor(100 + Math.random() * 900),
+    emp: S.user.empId,
+    cat: f.cat.value,
+    details: f.details.value,
+    status: 'Open'
+  };
+  S.tix.unshift(newTix);
+  toast('Support ticket submitted', 'success');
+  render();
+}
+
+function managerView() {
+  const T = [
+    ['sum', '3D Executive Dashboard', 'fa-chart-pie'],
+    ['tms', 'Vehicle TMS Catalog', 'fa-truck-ramp-box'],
+    ['dep', 'Vehicle Departures', 'fa-truck-fast'],
+    ['att', 'Staff Attendance', 'fa-user-check'],
+    ['vis', 'Visitor Approvals', 'fa-id-badge'],
+    ['ext', 'Shift Extensions', 'fa-clock-rotate-left'],
+    ['lev', 'Leave Approvals', 'fa-plane-departure'],
+    ['tix', 'Support Tickets', 'fa-headset'],
+    ['reg', 'Registrations & Password Vault', 'fa-user-plus'],
+    ['km', 'Vehicle KM Logs', 'fa-gauge-high'],
+    ['hist', 'Edit History', 'fa-history']
+  ];
+
+  let b = '';
+
+  if (S.tab === 'sum') {
+    const plannedVeh = S.deps.length;
+    const inTransit = S.deps.filter(d => d.status === 'In Transit').length;
+    const staffPresent = S.att.length;
+    const pendingApprovals = S.vis.filter(v => v.status==='Pending Approval').length + 
+                             S.ext.filter(e => e.status==='Pending').length + 
+                             S.lev.filter(l => l.status==='Pending').length + 
+                             S.regs.filter(r => r.status==='Pending').length;
+
+    b = `
+      <div class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="stat-card-3d theme-amber flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-amber-300/80">Vehicles Planned</div>
+              <div class="text-3xl font-black mt-1 text-white drop-shadow">${plannedVeh}</div>
+              <div class="text-[11px] text-amber-200/60 font-semibold mt-1"><i class="fa-solid fa-truck"></i> Daily Hub Schedule</div>
+            </div>
+            <div class="icon-box-3d bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+          </div>
+
+          <div class="stat-card-3d theme-cyan flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-cyan-300/80">In Transit Dispatches</div>
+              <div class="text-3xl font-black mt-1 text-white drop-shadow">${inTransit}</div>
+              <div class="text-[11px] text-cyan-200/60 font-semibold mt-1"><i class="fa-solid fa-route"></i> Active Linehauls</div>
+            </div>
+            <div class="icon-box-3d bg-gradient-to-br from-cyan-400 to-cyan-600 text-slate-950">
+              <i class="fa-solid fa-route"></i>
+            </div>
+          </div>
+
+          <div class="stat-card-3d theme-emerald flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-emerald-300/80">Staff Present</div>
+              <div class="text-3xl font-black mt-1 text-white drop-shadow">${staffPresent}</div>
+              <div class="text-[11px] text-emerald-200/60 font-semibold mt-1"><i class="fa-solid fa-users"></i> Biometric Verified</div>
+            </div>
+            <div class="icon-box-3d bg-gradient-to-br from-emerald-400 to-emerald-600 text-slate-950">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+          </div>
+
+          <div class="stat-card-3d theme-purple flex items-center justify-between">
+            <div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-purple-300/80">Action Requests</div>
+              <div class="text-3xl font-black mt-1 text-white drop-shadow">${pendingApprovals}</div>
+              <div class="text-[11px] text-purple-200/60 font-semibold mt-1"><i class="fa-solid fa-clock"></i> Manager Approval Queue</div>
+            </div>
+            <div class="icon-box-3d bg-gradient-to-br from-purple-400 to-purple-600 text-slate-950">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="card-3d lg:col-span-2 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-700/30 border border-amber-500/40 flex items-center justify-center text-amber-400 text-base shadow-md">
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <div>
+                  <h3 class="font-black text-white text-base">Active Vehicle Departures</h3>
+                  <p class="text-xs text-slate-400">Live gate status and placement timestamps</p>
+                </div>
+              </div>
+              <button onclick="setTab('dep')" class="pill-3d bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30">View All</button>
+            </div>
+            ${depTable('mgr')}
+          </div>
+
+          <div class="space-y-6">
+            <div class="card-3d space-y-4">
+              <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-700/30 border border-cyan-500/40 flex items-center justify-center text-cyan-400 text-base shadow-md">
+                  <i class="fa-solid fa-clipboard-list"></i>
+                </div>
+                <div>
+                  <h3 class="font-black text-white text-base">Approval Queue</h3>
+                  <p class="text-xs text-slate-400">Visitors, Leave & Extensions</p>
+                </div>
+              </div>
+              ${tbl(['Type', 'Requested By', 'Details', 'Action'], [
+                ...S.vis.filter(v => v.status==='Pending Approval').map(v => `<tr><td><span class="pill-3d bg-emerald-500/20 text-emerald-300">Visitor Pass</span></td><td><b>${v.name}</b></td><td class="text-xs">${v.purpose}</td><td>${acts('vis',v,'Pending Approval','Approved','Rejected')}</td></tr>`),
+                ...S.ext.filter(e => e.status==='Pending').map(e => `<tr><td><span class="pill-3d bg-amber-500/20 text-amber-300">Shift OT</span></td><td><b>${e.name}</b></td><td class="text-xs">${e.range}</td><td>${acts('ext',e,'Pending','Approved','Rejected')}</td></tr>`),
+                ...S.lev.filter(l => l.status==='Pending').map(l => `<tr><td><span class="pill-3d bg-purple-500/20 text-purple-300">Leave</span></td><td><b>${l.name}</b></td><td class="text-xs">${l.range}</td><td>${acts('lev',l,'Pending','Approved','Rejected')}</td></tr>`),
+                ...S.regs.filter(r => r.status==='Pending').map(r => `<tr><td><span class="pill-3d bg-cyan-500/20 text-cyan-300">Registration</span></td><td><b>${r.name}</b></td><td class="text-xs">${r.des}</td><td>${r.status==='Pending' ? `<button class="pill-3d bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" onclick="setReg('${r.id}','Approved')">Approve</button>` : '—'}</td></tr>`)
+              ])}
+            </div>
+
+            <div class="card-3d space-y-3 bg-gradient-to-br from-[#0a182b] to-[#040e1b]">
+              <h4 class="font-black text-xs uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-amber-400"></i> Executive Quick Actions
+              </h4>
+              <div class="grid grid-cols-2 gap-2.5">
+                <button onclick="setTab('tms')" class="btn-secondary-3d py-2.5 justify-start text-xs"><i class="fa-solid fa-pen-to-square text-amber-400"></i> Update TMS</button>
+                <button onclick="openKmLogModal()" class="btn-secondary-3d py-2.5 justify-start text-xs"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Log Odometer</button>
+                <button onclick="exportManagerDepartures()" class="btn-secondary-3d py-2.5 justify-start text-xs"><i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV</button>
+                <button onclick="openVisitorModal()" class="btn-secondary-3d py-2.5 justify-start text-xs"><i class="fa-solid fa-user-plus text-purple-400"></i> Add Visitor</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (S.tab === 'dep') {
+    b = `<div class="card-3d space-y-4">
+      <div class="flex flex-wrap justify-between gap-3 items-center border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/30 to-amber-900/40 border border-amber-500/50 flex items-center justify-center text-amber-400 text-lg shadow-md">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">Master Vehicle Departures Register</h3>
+            <p class="text-xs text-slate-400">Central dispatches linehaul log</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          ${searchBar()}
+          ${dateBar()}
+          <button onclick="exportManagerDepartures()" class="btn-3d text-xs bg-emerald-600 hover:bg-emerald-500">
+            <i class="fa-solid fa-file-csv"></i> Download CSV
+          </button>
+          <label class="btn-secondary-3d cursor-pointer"><i class="fa-solid fa-file-import"></i> Import CSV / Excel<input type="file" accept=".csv,.xlsx,.xls" class="hidden" onchange="imp(this)"></label>
+        </div>
+      </div>
+      <form onsubmit="addDep(event)" class="grid grid-cols-2 sm:grid-cols-6 gap-2.5 items-end bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 shadow-inner">
+        <div><label class="text-[10px] text-slate-400">Date</label><input name="date" type="date" required value="${S.date||today}" class="inp-3d"></div>
+        <div><label class="text-[10px] text-slate-400">Vehicle Number</label><input name="veh" required placeholder="OD-02-AX-8812" class="inp-3d font-mono font-bold text-amber-400"></div>
+        <div><label class="text-[10px] text-slate-400">Trip ID</label><input name="trip" required placeholder="TRP9XLS..." class="inp-3d font-mono"></div>
+        <div><label class="text-[10px] text-slate-400">Lane (LH)</label><input name="lane" required placeholder="CDL-BBI" class="inp-3d"></div>
+        <div><label class="text-[10px] text-slate-400">Lane Type</label><input name="type" required placeholder="National Regular" class="inp-3d"></div>
+        <button class="btn-3d w-full py-2.5"><i class="fa-solid fa-plus"></i> Add Dispatch</button>
+      </form>
+      ${depTable('mgr')}
+    </div>`;
+  }
+
+  if (S.tab === 'att') {
+    const list = filterData(S.att, ['id', 'name', 'status']);
+    b = `<div class="card-3d space-y-4">
+      <div class="flex justify-between items-center flex-wrap gap-2 border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/30 to-emerald-900/40 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-lg shadow-md">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">Master Staff Attendance Register</h3>
+            <p class="text-xs text-slate-400">Hub biometric attendance logs</p>
+          </div>
+        </div>
+        ${searchBar()}
+      </div>
+      ${tbl(['Emp ID', 'Name', 'Punch In', 'Punch Out', 'Total Hours', 'Status'], list.map(a => `<tr>
+        <td class="font-mono text-cyan-400 font-bold">${a.id}</td>
+        <td class="font-bold text-white">${a.name}</td>
+        <td class="text-emerald-400 font-mono font-bold"><i class="fa-solid fa-arrow-right-to-bracket text-xs"></i> ${a.in}</td>
+        <td class="text-amber-400 font-mono font-bold"><i class="fa-solid fa-arrow-right-from-bracket text-xs"></i> ${a.out}</td>
+        <td class="font-mono font-bold text-teal-300"><i class="fa-solid fa-hourglass-half text-xs"></i> ${calcTotalHours(a.in, a.out)}</td>
+        <td>${badge(a.status, true)}</td>
+      </tr>`))}
+    </div>`;
+  }
+
+  if (S.tab === 'tms') {
+    b = `<div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="saveTms(event)" class="card-3d space-y-3">
+        <h3 class="font-black text-amber-400"><i class="fa-solid fa-pen-to-square"></i> ${S.edTms ? 'Edit TMS Lane' : 'Add TMS Lane Catalog'}</h3>
+        <div><label class="text-xs text-slate-400">Lane Code</label><input name="lane" required placeholder="e.g. CDL-BBI" value="${ET().lane||''}" class="inp-3d font-mono font-bold"></div>
+        <div><label class="text-xs text-slate-400">Fleet Size</label><input name="fleet" required placeholder="e.g. 32FT" value="${ET().fleet||''}" class="inp-3d"></div>
+        <div class="grid grid-cols-3 gap-2">
+          <div><label class="text-[10px] text-slate-400">STP</label><input name="stp" required placeholder="08:00 AM" value="${ET().stp||''}" class="inp-3d"></div>
+          <div><label class="text-[10px] text-slate-400">STD</label><input name="std" required placeholder="09:00 PM" value="${ET().std||''}" class="inp-3d"></div>
+          <div><label class="text-[10px] text-slate-400">STA</label><input name="sta" required placeholder="12:00 PM" value="${ET().sta||''}" class="inp-3d"></div>
+        </div>
+        <button class="btn-3d w-full py-2.5">${S.edTms ? 'Update Lane Record' : 'Save Lane Template'}</button>
+        ${S.edTms ? '<button type="button" onclick="cancelTms()" class="pill-3d bg-slate-800 w-full py-2 justify-center">Cancel Edit</button>' : ''}
+        <label class="btn-secondary-3d cursor-pointer block text-center py-2.5"><i class="fa-solid fa-file-excel"></i> Bulk Import TMS Catalog<input type="file" accept=".csv,.xlsx,.xls" class="hidden" onchange="impTms(this)"></label>
+      </form>
+
+      <div class="card-3d lg:col-span-2 space-y-4">
+        <h3 class="font-black text-white text-base"><i class="fa-solid fa-list-check text-cyan-400 mr-2"></i> Master TMS Lane Catalog</h3>
+        ${tbl(['Lane Code', 'Fleet Size', 'STP', 'STD', 'STA', 'Actions'], S.tms.map(t => `<tr>
+          <td class="font-mono font-black text-cyan-300">${t.lane}</td>
+          <td><span class="pill-3d bg-slate-800 text-slate-300">${t.fleet}</span></td>
+          <td class="font-mono">${t.stp}</td>
+          <td class="font-mono text-amber-400">${t.std}</td>
+          <td class="font-mono text-teal-400">${t.sta}</td>
+          <td>
+            <button class="pill-3d bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30" onclick="editTms('${t.lane}')"><i class="fa-solid fa-pen"></i> Edit</button>
+            <button class="pill-3d bg-slate-800 text-slate-400 hover:text-rose-400" onclick="delTms('${t.lane}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>`))}
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'reg') {
+    b = `<div class="space-y-6">
+      <div class="card-3d space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center text-base">
+              <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-white text-base">User Credentials & Registration Approval Vault</h3>
+              <p class="text-xs text-slate-400">View user logins, raw passwords, roles, approve registrations, and delete accounts</p>
+            </div>
+          </div>
+          ${searchBar()}
+        </div>
+        ${tbl(['Emp ID / Username', 'Employee Name', 'Role', 'Designation', 'Password', 'Status', 'Approval / Actions'], filterData(S.regs, ['id', 'name', 'role', 'des']).map(r => `<tr>
+          <td class="font-mono text-cyan-400 font-bold">${r.id}</td>
+          <td class="font-bold text-white">${r.name}</td>
+          <td><span class="pill-3d bg-slate-800 text-yellow-300 font-bold">${r.role}</span></td>
+          <td class="text-slate-300">${r.des}</td>
+          <td class="font-mono text-emerald-400 font-black bg-slate-950/80 px-2.5 py-1 rounded-lg border border-slate-800">${r.pass || 'Standard'}</td>
+          <td>${badge(r.status, r.status==='Approved')}</td>
+          <td>
+            <div class="flex items-center gap-2">
+              ${r.status==='Pending' ? `
+                <button class="pill-3d bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30" onclick="setReg('${r.id}','Approved')"><i class="fa-solid fa-check"></i> Approve</button>
+                <button class="pill-3d bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30" onclick="setReg('${r.id}','Rejected')"><i class="fa-solid fa-xmark"></i> Reject</button>
+              ` : ''}
+              <button class="pill-3d bg-rose-900/40 text-rose-300 border border-rose-700/60 hover:bg-rose-700 hover:text-white" onclick="delReg('${r.id}')"><i class="fa-solid fa-trash-can"></i> Delete</button>
+            </div>
+          </td>
+        </tr>`))}
+      </div>
+
+      <div class="card-3d space-y-4">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-base">
+            <i class="fa-solid fa-key"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">Password Reset Approval Queue</h3>
+            <p class="text-xs text-slate-400">Review pending password reset requests from staff</p>
+          </div>
+        </div>
+        ${tbl(['Reset ID', 'Emp ID / Username', 'Employee Name', 'Requested New Password', 'Status', 'Manager Action'], S.pwdResets.map(p => `<tr>
+          <td class="font-mono text-slate-400">${p.id}</td>
+          <td class="font-mono text-cyan-300 font-bold">${p.empId}</td>
+          <td class="font-bold text-white">${p.name}</td>
+          <td class="font-mono text-yellow-300 font-black">${p.newPass}</td>
+          <td>${badge(p.status, p.status==='Approved')}</td>
+          <td>
+            ${p.status==='Pending' ? `
+              <div class="flex items-center gap-1.5">
+                <button class="pill-3d bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30" onclick="approvePasswordReset('${p.id}', true)"><i class="fa-solid fa-check"></i> Approve & Apply</button>
+                <button class="pill-3d bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30" onclick="approvePasswordReset('${p.id}', false)"><i class="fa-solid fa-xmark"></i> Reject</button>
+              </div>
+            ` : '<span class="text-slate-500 text-xs font-mono">Processed</span>'}
+          </td>
+        </tr>`))}
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'vis') {
+    b = `<div class="card-3d space-y-4">
+      <div class="flex justify-between items-center flex-wrap gap-2 border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center text-lg shadow-md">
+            <i class="fa-solid fa-id-badge"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">Visitor Access Approvals Desk</h3>
+            <p class="text-xs text-slate-400">Approve or reject hub guest passes</p>
+          </div>
+        </div>
+        ${searchBar()}
+      </div>
+      ${tbl(['Pass ID', 'Visitor Name', 'Coming From', 'Host Employee', 'Purpose of Visit', 'Check-In', 'Check-Out', 'Status', 'Manager Action'], filterData(S.vis, ['id', 'name', 'from', 'host']).map(v => `<tr>
+        <td class="font-mono text-cyan-400 font-bold">${v.id}</td>
+        <td class="font-bold text-white">${v.name}</td>
+        <td class="text-slate-300">${v.from || '--'}</td>
+        <td>${v.host}</td>
+        <td>${v.purpose}</td>
+        <td class="text-emerald-400 font-mono font-bold">${v.in}</td>
+        <td class="text-amber-400 font-mono font-bold">${v.out}</td>
+        <td>${badge(v.status, v.status==='Approved'||v.status==='Completed'||v.status==='Checked In')}</td>
+        <td>${acts('vis', v, 'Pending Approval', 'Approved', 'Rejected')}</td>
+      </tr>`))}
+    </div>`;
+  }
+
+  if (S.tab === 'ext') b = `<div class="card-3d space-y-4"><div class="flex justify-between items-center border-b border-slate-800 pb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-base"><i class="fa-solid fa-clock-rotate-left"></i></div><h3 class="font-black text-white text-base">Shift Extension (OT) Approvals</h3></div>${searchBar()}</div>${tbl(['Emp ID', 'Employee Name', 'Shift Time Range', 'Total Hours', 'Justification / Remarks', 'Manager Action'], filterData(S.ext, ['emp', 'name']).map(v => `<tr><td class="font-mono text-cyan-400 font-bold">${v.emp}</td><td class="font-bold text-white">${v.name}</td><td class="font-mono">${v.range}</td><td class="text-cyan-300 font-bold">${v.hrs}</td><td>${v.remarks}</td><td>${acts('ext', v, 'Pending', 'Approved', 'Rejected')}</td></tr>`))}</div>`;
+  if (S.tab === 'lev') b = `<div class="card-3d space-y-4"><div class="flex justify-between items-center border-b border-slate-800 pb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center text-base"><i class="fa-solid fa-plane-departure"></i></div><h3 class="font-black text-white text-base">Employee Leave Approvals</h3></div>${searchBar()}</div>${tbl(['Emp ID', 'Employee Name', 'Leave Dates', 'Reason for Leave', 'Manager Action'], filterData(S.lev, ['emp', 'name']).map(v => `<tr><td class="font-mono text-cyan-400 font-bold">${v.emp}</td><td class="font-bold text-white">${v.name}</td><td class="font-mono text-amber-400">${v.range}</td><td>${v.reason}</td><td>${acts('lev', v, 'Pending', 'Approved', 'Rejected')}</td></tr>`))}</div>`;
+  if (S.tab === 'tix') b = `<div class="card-3d space-y-4"><div class="flex justify-between items-center border-b border-slate-800 pb-3"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 flex items-center justify-center text-base"><i class="fa-solid fa-headset"></i></div><h3 class="font-black text-white text-base">Support & Allowance Discrepancies</h3></div>${searchBar()}</div>${tbl(['Ticket ID', 'Emp ID', 'Category', 'Description / Details', 'Resolution Action'], filterData(S.tix, ['id', 'emp', 'cat']).map(v => `<tr><td class="font-mono text-cyan-300 font-bold">${v.id}</td><td class="font-mono text-cyan-400">${v.emp}</td><td><span class="pill-3d bg-slate-800 text-amber-400">${v.cat}</span></td><td>${v.details}</td><td>${acts('tix', v, 'Open', 'Resolved', '')}</td></tr>`))}</div>`;
+
+  if (S.tab === 'km') {
+    b = `<div class="card-3d space-y-4">
+      <div class="flex justify-between items-center flex-wrap gap-2 border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center text-lg shadow-md">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <div>
+            <h3 class="font-black text-white text-base">Master Vehicle Odometer (KM) Logs</h3>
+            <p class="text-xs text-slate-400">Fleet distance monitoring</p>
+          </div>
+        </div>
+        ${searchBar()}
+      </div>
+      ${tbl(['Log Date', 'Vehicle Number', 'Start KM', 'End KM', 'Distance Travelled', 'Security Lock State', 'Manager Action'], filterData(S.km, ['veh', 'date']).map(v => `<tr>
+        <td class="font-mono text-slate-300">${v.date || today}</td>
+        <td class="font-mono text-cyan-300 font-black">${v.veh}</td>
+        <td class="font-mono">${v.s} KM</td>
+        <td class="font-mono text-emerald-400 font-bold">${v.e ? v.e + ' KM' : '--'}</td>
+        <td class="font-mono text-amber-400 font-bold">${v.e ? (v.e - v.s) + ' KM' : '--'}</td>
+        <td>${badge(v.perm ? 'Security Allowed' : 'Locked', v.perm)}</td>
+        <td><button class="pill-3d ${v.perm ? 'bg-rose-500/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'}" onclick="togKm('${v.id}')"><i class="fa-solid ${v.perm ? 'fa-lock' : 'fa-lock-open'}"></i> ${v.perm ? 'Lock Security Edit' : 'Grant Security Edit'}</button></td>
+      </tr>`))}
+    </div>`;
+  }
+
+  if (S.tab === 'hist') {
+    b = `<div class="card-3d space-y-4">
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-base">
+          <i class="fa-solid fa-history"></i>
+        </div>
+        <h3 class="font-black text-white text-base">Hub Operational Audit Trail</h3>
+      </div>
+      ${tbl(['Timestamp', 'Vehicle / ID', 'Reference', 'Field Action', 'Previous Value', 'Updated Value'], S.hist.map(h => `<tr>
+        <td class="font-mono text-slate-400">${h[0]}</td>
+        <td class="font-mono text-cyan-300 font-bold">${h[1]}</td>
+        <td class="font-mono text-slate-300">${h[2]}</td>
+        <td><span class="pill-3d bg-slate-800 text-amber-400">${h[3]}</span></td>
+        <td class="text-rose-400 line-through font-mono">${h[4]}</td>
+        <td class="text-emerald-400 font-bold font-mono">${h[5]}</td>
+      </tr>`))}
+    </div>`;
+  }
+
+  return tabs(T) + b;
+}
+
+function securityView() {
+  const openTripsCount = S.deps.filter(d => !isTripFullyCompleted(d)).length;
+  const closedTripsCount = S.deps.length - openTripsCount;
+
+  let activeKmList = S.km.filter(k => !S.date || k.date === S.date);
+  if (!S.showClosedKmSec) {
+    activeKmList = activeKmList.filter(k => !(k.e !== null && k.e !== undefined && !k.perm));
+  }
+  const openKmCount = S.km.filter(k => k.e === null || k.e === undefined || k.perm).length;
+  const closedKmCount = S.km.length - openKmCount;
+
+  let activeVisList = S.vis.filter(v => !S.date || (v.date ? v.date === S.date : true));
+  activeVisList = filterData(activeVisList, ['id', 'name', 'from', 'host']);
+
+  const secEmpId = S.user ? (S.user.empId || 'SEC007') : 'SEC007';
+  const secAtt = S.att.find(x => x.id === secEmpId) || { in: '--', out: '--', status: 'Present' };
+
+  return `
+    <div class="space-y-6">
+      <div class="card-3d bg-gradient-to-r from-[#06101F] via-[#041a16] to-[#032924] border border-[#00796B]/60 p-5">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="icon-box-3d bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950">
+              <i class="fa-solid fa-fingerprint"></i>
+            </div>
+            <div>
+              <div class="text-[11px] font-black uppercase tracking-wider text-amber-400">Security Duty Shift Console</div>
+              <div class="text-base font-bold text-white flex items-center gap-2 mt-0.5">
+                <span>${S.user ? S.user.name : 'Security Supervisor'} (${secEmpId})</span>
+                <span class="pill-3d bg-teal-500/20 text-teal-300 text-[10px]"><i class="fa-solid fa-shield-cat"></i> On Duty</span>
+              </div>
+              <div class="text-xs text-slate-400 mt-1 font-mono">
+                Punch IN: <span class="text-emerald-400 font-bold">${secAtt.in}</span> | 
+                Punch OUT: <span class="text-amber-400 font-bold">${secAtt.out}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="punch()" class="btn-3d py-3 px-5 text-xs font-black shadow-lg">
+              <i class="fa-solid fa-fingerprint text-sm"></i> ${S.punched ? 'Punch OUT (Biometric)' : 'Punch IN (Biometric)'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-3d space-y-4">
+        <div class="flex flex-wrap justify-between gap-3 items-center border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/30 to-amber-900/40 border border-amber-500/50 flex items-center justify-center text-amber-400 text-lg shadow-md">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-white text-base">Gate Control: Vehicle Departures Register</h3>
+              <p class="text-xs text-slate-400">Submit ATP, ATD, ATA & Unloading Time. Submitted fields auto-lock.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            ${searchBar()}
+            ${dateBar()}
+            <button onclick="S.showClosedSec = !S.showClosedSec; render();" class="btn-secondary-3d text-xs">
+              <i class="fa-solid ${S.showClosedSec ? 'fa-eye-slash' : 'fa-eye'}"></i>
+              ${S.showClosedSec ? 'Hide Closed Trips' : `Show Closed Trips (${closedTripsCount})`}
+            </button>
+            <button onclick="exportSecurityDepartures()" class="btn-3d text-xs bg-emerald-600 hover:bg-emerald-500">
+              <i class="fa-solid fa-file-csv"></i> Download CSV
+            </button>
+          </div>
+        </div>
+        ${depTable('sec')}
+      </div>
+
+      <div class="card-3d space-y-4">
+        <div class="flex flex-wrap justify-between gap-3 items-center border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-500/30 to-cyan-900/40 border border-cyan-500/50 flex items-center justify-center text-cyan-400 text-lg shadow-md">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-white text-base">Vehicle Odometer (KM) Log Desk</h3>
+              <p class="text-xs text-slate-400">Recording End KM locks entry and updates mileage logs</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            ${dateBar()}
+            <button onclick="openKmLogModal()" class="btn-3d"><i class="fa-solid fa-plus"></i> Submit Odometer Log</button>
+            <button onclick="S.showClosedKmSec = !S.showClosedKmSec; render();" class="btn-secondary-3d text-xs">
+              <i class="fa-solid ${S.showClosedKmSec ? 'fa-eye-slash' : 'fa-eye'}"></i>
+              ${S.showClosedKmSec ? 'Hide Completed KM Logs' : `Show Completed KM Logs (${closedKmCount})`}
+            </button>
+            <button onclick="exportSecurityKmLogs()" class="btn-3d text-xs bg-emerald-600 hover:bg-emerald-500">
+              <i class="fa-solid fa-file-csv"></i> Download CSV
+            </button>
+          </div>
+        </div>
+        
+        ${tbl(
+          ['Log Date', 'Vehicle Number', 'Lane / Destination', 'Start KM', 'End KM', 'Distance Travelled', 'Status', 'Security Action'],
+          activeKmList.map(v => `<tr>
+            <td class="font-mono text-slate-300">${v.date || today}</td>
+            <td class="font-mono text-cyan-300 font-black">${v.veh}</td>
+            <td class="font-mono text-amber-400 font-bold">${v.lane || '--'}</td>
+            <td class="font-mono">${v.s} KM</td>
+            <td class="font-mono text-emerald-400 font-bold">${v.e ? v.e + ' KM' : '--'}</td>
+            <td class="font-mono text-amber-400 font-bold">${v.e ? (v.e - v.s) + ' KM' : '--'}</td>
+            <td>${v.e && !v.perm ? badge('Completed & Locked', true) : badge('Active / In Use', false)}</td>
+            <td>
+              ${v.perm ? `
+                <button onclick="openKmLogModal('${v.id}')" class="pill-3d bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30">
+                  <i class="fa-solid fa-pen-to-square"></i> Log / Update KM
+                </button>
+              ` : `<span class="text-slate-500 text-xs font-mono"><i class="fa-solid fa-lock"></i> Locked</span>`}
+            </td>
+          </tr>`)
+        )}
+      </div>
+
+      <div class="card-3d space-y-4">
+        <div class="flex flex-wrap justify-between gap-3 items-center border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/30 to-emerald-900/40 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-lg shadow-md">
+              <i class="fa-solid fa-id-badge"></i>
+            </div>
+            <div>
+              <h3 class="font-black text-white text-base">Gate Visitor Verification Desk</h3>
+              <p class="text-xs text-slate-400">Approved visitor check-in and check-out</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 flex-wrap">
+            ${dateBar()}
+            <button onclick="openVisitorModal()" class="btn-3d"><i class="fa-solid fa-user-plus"></i> Register Gate Visitor</button>
+            <button onclick="exportSecurityVisitors()" class="btn-3d text-xs bg-emerald-600 hover:bg-emerald-500">
+              <i class="fa-solid fa-file-csv"></i> Download CSV
+            </button>
+          </div>
+        </div>
+
+        ${tbl(
+          ['Pass ID', 'Visitor Name', 'Coming From', 'Host Employee', 'Purpose of Visit', 'Check-In', 'Check-Out', 'Status', 'Gate Action'],
+          activeVisList.map(v => `<tr>
+            <td class="font-mono text-cyan-400 font-bold">${v.id}</td>
+            <td class="font-bold text-white">${v.name}</td>
+            <td class="text-slate-300">${v.from || '--'}</td>
+            <td>${v.host}</td>
+            <td>${v.purpose}</td>
+            <td class="text-emerald-400 font-mono font-bold">${v.in}</td>
+            <td class="text-amber-400 font-mono font-bold">${v.out}</td>
+            <td>${badge(v.status, v.status==='Approved'||v.status==='Completed'||v.status==='Checked In')}</td>
+            <td>
+              ${v.status === 'Approved' ? `
+                <button onclick="visitorCheckIn('${v.id}')" class="pill-3d bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30">
+                  <i class="fa-solid fa-right-to-bracket"></i> Check In
+                </button>
+              ` : v.status === 'Checked In' ? `
+                <button onclick="visitorCheckOut('${v.id}')" class="pill-3d bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30">
+                  <i class="fa-solid fa-right-from-bracket"></i> Check Out
+                </button>
+              ` : v.status === 'Pending Approval' ? `
+                <span class="text-rose-400 text-xs font-bold animate-pulse"><i class="fa-solid fa-clock"></i> Awaiting Manager</span>
+              ` : `
+                <span class="text-slate-500 text-xs font-semibold"><i class="fa-solid fa-circle-check"></i> Completed</span>
+              `}
+            </td>
+          </tr>`)
+        )}
+      </div>
+    </div>
+  `;
+}
+
+function employeeView() {
+  const empId = S.user ? S.user.empId : 'SFE1082';
+  const a = S.att.find(x => x.id === empId) || { in: '--', out: '--', status: 'Present' };
+  
+  const T = [
+    ['punch', 'Biometric Shift Console', 'fa-fingerprint'],
+    ['myAtt', 'My Attendance History', 'fa-calendar-check'],
+    ['myExt', 'Shift Extensions (OT)', 'fa-clock-rotate-left'],
+    ['myLev', 'Leave Applications', 'fa-plane-departure'],
+    ['myTix', 'Support Tickets', 'fa-headset']
+  ];
+
+  let b = '';
+
+  if (S.tab === 'punch') {
+    b = `<div class="card-3d max-w-lg mx-auto text-center space-y-6 p-8 border border-[#00796B]/50">
+      <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-[#004D40] to-[#00241f] border border-[#00796B] flex items-center justify-center text-amber-400 text-4xl shadow-2xl shadow-emerald-950">
+        <i class="fa-solid fa-fingerprint animate-pulse"></i>
+      </div>
+      <div>
+        <h3 class="font-black text-2xl text-white">Biometric Shift Attendance</h3>
+        <p class="text-xs text-slate-400 mt-1">Logged in as: <b class="text-cyan-300">${S.user.name}</b> (${empId})</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800 shadow-inner">
+        <div>
+          <div class="text-[10px] uppercase text-slate-400 font-extrabold">Punch IN Time</div>
+          <div class="text-lg font-mono font-black text-emerald-400 mt-1">${a.in}</div>
+        </div>
+        <div>
+          <div class="text-[10px] uppercase text-slate-400 font-extrabold">Punch OUT Time</div>
+          <div class="text-lg font-mono font-black text-amber-400 mt-1">${a.out}</div>
+        </div>
+      </div>
+      <button onclick="punch()" class="btn-3d w-full py-4 text-sm font-black shadow-xl">
+        <i class="fa-solid fa-fingerprint mr-1 text-base"></i> ${S.punched ? 'Punch OUT (Biometric Verify)' : 'Punch IN (Biometric Verify)'}
+      </button>
+    </div>`;
+  }
+
+  if (S.tab === 'myAtt') {
+    const myAttRecords = S.att.filter(x => x.id === empId || x.name === S.user.name);
+    b = `<div class="card-3d space-y-4">
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/30 to-emerald-900/40 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-lg shadow-md">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+        <div>
+          <h3 class="font-black text-white text-base">My Personal Attendance History</h3>
+          <p class="text-xs text-slate-400">View logged punches and calculated shift durations</p>
+        </div>
+      </div>
+      ${tbl(['Date', 'Emp ID', 'Punch In', 'Punch Out', 'Total Shift Hours', 'Status'], 
+        myAttRecords.map(rec => `<tr>
+          <td class="font-mono text-slate-300">${today}</td>
+          <td class="font-mono text-cyan-400 font-bold">${rec.id}</td>
+          <td class="text-emerald-400 font-mono font-bold"><i class="fa-solid fa-arrow-right-to-bracket text-xs"></i> ${rec.in}</td>
+          <td class="text-amber-400 font-mono font-bold"><i class="fa-solid fa-arrow-right-from-bracket text-xs"></i> ${rec.out}</td>
+          <td class="font-mono font-bold text-teal-300"><i class="fa-solid fa-hourglass-half text-xs"></i> ${calcTotalHours(rec.in, rec.out)}</td>
+          <td>${badge(rec.out && rec.out !== '--' ? 'Shift Completed' : 'Shift Active', rec.status === 'Present')}</td>
+        </tr>`)
+      )}
+    </div>`;
+  }
+
+  if (S.tab === 'myExt') {
+    b = `<div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="submitExtension(event)" class="card-3d space-y-3">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-plus-circle"></i>
+          </div>
+          <h3 class="font-black text-amber-400">Request OT / Shift Extension</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><label class="text-[10px] text-slate-400">Start Time</label><input id="ext_start" name="start" type="time" required onchange="calculateHours()" class="inp-3d"></div>
+          <div><label class="text-[10px] text-slate-400">End Time</label><input id="ext_end" name="end" type="time" required onchange="calculateHours()" class="inp-3d"></div>
+        </div>
+        <div><label class="text-[10px] text-slate-400">Total Overtime Hours (Auto-calculated)</label><input id="ext_hrs" name="hrs" type="text" readonly placeholder="Auto-calculated from shift times" required class="inp-3d font-bold font-mono text-cyan-300 bg-slate-950 cursor-not-allowed"></div>
+        <div><label class="text-[10px] text-slate-400">Remarks / Justification</label><textarea name="remarks" required placeholder="Sorting excess incoming dispatches..." class="inp-3d h-20 resize-none"></textarea></div>
+        <button class="btn-3d w-full py-2.5">Submit OT Request</button>
+      </form>
+      <div class="card-3d lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-base">
+            <i class="fa-solid fa-history"></i>
+          </div>
+          <h3 class="font-black text-white text-base">My Overtime Request Status</h3>
+        </div>
+        ${tbl(['Request ID', 'Shift Range', 'Hours', 'Remarks', 'Approval Status'], S.ext.filter(e => e.emp === empId).map(e => `<tr>
+          <td class="font-mono text-cyan-300 font-bold">${e.id}</td>
+          <td class="font-mono">${e.range}</td>
+          <td class="font-bold text-emerald-400">${e.hrs}</td>
+          <td>${e.remarks}</td>
+          <td>${badge(e.status, e.status==='Approved')}</td>
+        </tr>`))}
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'myLev') {
+    b = `<div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="submitLeave(event)" class="card-3d space-y-3">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-calendar-plus"></i>
+          </div>
+          <h3 class="font-black text-purple-400">Apply for Leave</h3>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><label class="text-[10px] text-slate-400">From Date</label><input name="from" type="date" required class="inp-3d font-mono"></div>
+          <div><label class="text-[10px] text-slate-400">To Date</label><input name="to" type="date" required class="inp-3d font-mono"></div>
+        </div>
+        <div><label class="text-[10px] text-slate-400">Reason for Leave</label><textarea name="reason" required placeholder="Family event / Medical leave..." class="inp-3d h-20 resize-none"></textarea></div>
+        <button class="btn-3d w-full py-2.5">Submit Application</button>
+      </form>
+      <div class="card-3d lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <div class="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/40 flex items-center justify-center text-base">
+            <i class="fa-solid fa-history"></i>
+          </div>
+          <h3 class="font-black text-white text-base">My Leave Applications</h3>
+        </div>
+        ${tbl(['Leave ID', 'Date Range', 'Reason', 'Approval Status'], S.lev.filter(l => l.emp === empId).map(l => `<tr>
+          <td class="font-mono text-cyan-300 font-bold">${l.id}</td>
+          <td class="font-mono text-amber-400">${l.range}</td>
+          <td>${l.reason}</td>
+          <td>${badge(l.status, l.status==='Approved')}</td>
+        </tr>`))}
+      </div>
+    </div>`;
+  }
+
+  if (S.tab === 'myTix') {
+    b = `<div class="grid lg:grid-cols-3 gap-6">
+      <form onsubmit="submitTicket(event)" class="card-3d space-y-3">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 flex items-center justify-center text-sm">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3 class="font-black text-rose-400">Raise Support Ticket</h3>
+        </div>
+        <div><label class="text-xs text-slate-400">Category</label>
+          <select name="cat" class="inp-3d">
+            <option value="Salary issue">Salary issue</option>
+            <option value="Roster issue">Roster issue</option>
+            <option value="Other Issue">Other Issue</option>
+          </select>
+        </div>
+        <div><label class="text-xs text-slate-400">Issue Details</label><textarea name="details" required placeholder="Describe discrepancy..." class="inp-3d h-24 resize-none"></textarea></div>
+        <button class="btn-3d w-full py-2.5">Submit Ticket</button>
+      </form>
+      <div class="card-3d lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <div class="w-9 h-9 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/40 flex items-center justify-center text-base">
+            <i class="fa-solid fa-ticket"></i>
+          </div>
+          <h3 class="font-black text-white text-base">My Raised Support Tickets</h3>
+        </div>
+        ${tbl(['Ticket ID', 'Category', 'Issue Details', 'Status'], S.tix.filter(t => t.emp === empId).map(t => `<tr>
+          <td class="font-mono text-cyan-300 font-bold">${t.id}</td>
+          <td><span class="pill-3d bg-slate-800 text-amber-400">${t.cat}</span></td>
+          <td>${t.details}</td>
+          <td>${badge(t.status, t.status==='Resolved')}</td>
+        </tr>`))}
+      </div>
+    </div>`;
+  }
+
+  return tabs(T) + b;
+}
+
+function openForgotModal() {
+  openModal(`
+    <div class="flex items-center gap-3 mb-4">
+      <div class="icon-box-3d bg-gradient-to-br from-cyan-500/30 to-cyan-900/40 text-cyan-400">
+        <i class="fa-solid fa-key"></i>
+      </div>
+      <div>
+        <h3 class="font-black text-lg text-white">Reset Password Request</h3>
+        <p class="text-xs text-slate-400">Requires Manager Approval to update</p>
+      </div>
+    </div>
+    <form onsubmit="submitForgotPassword(event)" class="space-y-3">
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Employee ID / Username</label>
+        <input name="empId" type="text" required placeholder="e.g. SFE1082" class="inp-3d font-mono font-bold text-cyan-300">
+      </div>
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Employee Full Name</label>
+        <input name="name" type="text" required placeholder="e.g. Jane Doe" class="inp-3d font-bold">
+      </div>
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">New Password</label>
+        <input name="newPass" type="password" required placeholder="Enter desired new password" class="inp-3d font-mono">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">Cancel</button>
+        <button type="submit" class="btn-3d"><i class="fa-solid fa-paper-plane"></i> Submit for Approval</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitForgotPassword(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newReq = {
+    id: 'RESET-' + Math.floor(100 + Math.random() * 900),
+    empId: f.empId.value.trim().toUpperCase(),
+    name: f.name.value.trim(),
+    newPass: f.newPass.value,
+    status: 'Pending'
+  };
+  S.pwdResets.unshift(newReq);
+  toast(`Password reset request submitted for ${newReq.name} (${newReq.empId}). Sent for Manager Approval.`, 'info');
+  closeModal();
+}
+
+function openRegistrationModal() {
+  openModal(`
+    <div class="flex items-center gap-3 mb-4">
+      <div class="icon-box-3d bg-gradient-to-br from-cyan-500/30 to-cyan-900/40 text-cyan-400">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <div>
+        <h3 class="font-black text-lg text-white">New User Registration</h3>
+        <p class="text-xs text-slate-400">Requires Manager Approval</p>
+      </div>
+    </div>
+    <form onsubmit="submitRegistration(event)" class="space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Employee ID / Username</label>
+          <input name="empId" type="text" required placeholder="e.g. SFE1105" class="inp-3d font-mono">
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Employee Full Name</label>
+          <input name="name" type="text" required placeholder="e.g. Ramesh Chandra" class="inp-3d">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Requested Role</label>
+          <select name="role" class="inp-3d font-bold text-yellow-300">
+            <option value="Manager">Manager</option>
+            <option value="Employee">Employee</option>
+            <option value="Security">Security</option>
+            <option value="Housekeeping">Housekeeping</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">Designation</label>
+          <select name="des" class="inp-3d font-bold text-yellow-300">
+            <option value="Ground Coordinator">Ground Coordinator</option>
+            <option value="Team Leader">Team Leader</option>
+            <option value="Acting TL">Acting TL</option>
+            <option value="Guard">Guard</option>
+            <option value="Housekeeping">Housekeeping</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-slate-400 block mb-1">Password</label>
+        <input name="pass" type="password" required placeholder="Set portal account password" class="inp-3d font-mono">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-800">Cancel</button>
+        <button type="submit" class="btn-3d"><i class="fa-solid fa-check-double"></i> Submit Registration</button>
+      </div>
+    </form>
+  `);
+}
+
+function submitRegistration(e) {
+  e.preventDefault();
+  const f = e.target;
+  const newReg = {
+    id: f.empId.value.trim().toUpperCase(),
+    name: f.name.value.trim(),
+    role: f.role.value,
+    des: f.des.value,
+    pass: f.pass.value,
+    status: 'Pending'
+  };
+  S.regs.unshift(newReg);
+  toast(`Registration submitted for ${newReg.name} (${newReg.id}). Pending Manager Approval.`, 'info');
+  closeModal();
+}
+
+function loginScreen() {
+  const currentGreeting = greet().toUpperCase();
+  return `
+    <div class="lg-wrap">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#e6e600]/20 border border-[#e6e600] text-[#e6e600] text-[11px] font-black tracking-wider uppercase mb-3 shadow-md">
+          <i class="fa-solid fa-sun animate-spin-slow text-yellow-300"></i> ${currentGreeting}
+        </div>
+        <div class="flex items-center justify-center gap-3 mb-1">
+          <div class="w-10 h-10 rounded-2xl bg-[#00897B] border-2 border-[#e6e600] flex items-center justify-center p-1 shadow-lg">
+            ${getLogoSVG('w-7 h-7')}
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Bhubaneswar DC</h1>
+        </div>
+        <p class="text-xs font-black tracking-wide text-yellow-300 uppercase mt-1">Shadowfax Unified Enterprise Portal</p>
+      </div>
+
+      <div class="lg-card">
+        <div class="lg-avatar">
+          ${getLogoSVG('w-10 h-10')}
+        </div>
+
+        <form onsubmit="login(event)" class="space-y-1">
+          <div class="lg-field">
+            <i class="fa-solid fa-user text-yellow-300 text-sm"></i>
+            <input type="text" id="u" placeholder="admin / Employee ID" required autocomplete="off">
+          </div>
+
+          <div class="lg-field">
+            <i class="fa-solid fa-lock text-yellow-300 text-sm"></i>
+            <input type="${S.showPassword ? 'text' : 'password'}" id="p" placeholder="Password" required>
+            <i class="fa-solid ${S.showPassword ? 'fa-eye-slash' : 'fa-eye'} text-yellow-300 text-sm cursor-pointer hover:text-white" onclick="S.showPassword = !S.showPassword; render();"></i>
+          </div>
+
+          <div class="flex items-center justify-between text-xs px-1 py-1 mb-4 font-bold">
+            <label class="flex items-center gap-2 text-white font-bold cursor-pointer">
+              <input type="checkbox" checked class="w-4 h-4 rounded border-yellow-400 bg-teal-900 text-yellow-400 focus:ring-0"> Remember me
+            </label>
+            <button type="button" onclick="openForgotModal()" class="text-yellow-300 hover:text-white font-black">Forgot Password?</button>
+          </div>
+
+          ${S.err ? `<div class="p-3 mb-3 text-xs rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 font-black flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> ${S.err}</div>` : ''}
+
+          <button type="submit" class="lg-login-btn">
+            LOGIN
+          </button>
+        </form>
+
+        <div class="mt-4">
+          <button type="button" onclick="openRegistrationModal()" class="lg-reg-btn">
+            <i class="fa-solid fa-user-plus text-xs"></i> New User Registration
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderHeader() {
+  const who = $('#who');
+  const topGreeting = $('#top-greeting');
+  
+  if (topGreeting) {
+    const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    if (S.user) {
+      topGreeting.innerHTML = `
+        <span><i class="fa-solid fa-sun text-yellow-300"></i> ${greet()}, <b class="text-white font-black">${S.user.name}</b></span>
+        <span class="text-teal-300">|</span>
+        <span class="font-mono font-black text-yellow-300 bg-[#00241f] px-2.5 py-0.5 rounded-lg border border-[#00897B] shadow-inner"><i class="fa-regular fa-clock mr-1"></i>${timeNow}</span>
+      `;
+    } else {
+      topGreeting.innerHTML = `
+        <span class="font-mono font-black text-yellow-300 bg-[#00241f] px-2.5 py-0.5 rounded-lg border border-[#00897B] shadow-inner"><i class="fa-regular fa-clock mr-1"></i>${timeNow}</span>
+      `;
+    }
+  }
+
+  if (!who) return;
+  if (!S.user) {
+    who.innerHTML = `<span class="pill-3d bg-yellow-400/20 text-yellow-300 border border-yellow-400/50 font-black"><i class="fa-solid fa-lock"></i> Gate Operations Restricted</span>`;
+    return;
+  }
+  who.innerHTML = `
+    <div class="flex items-center gap-2">
+      <div class="text-right hidden sm:block">
+        <div class="text-xs font-black text-white">${S.user.name}</div>
+        <div class="text-[10px] text-yellow-300 font-black uppercase font-mono">${S.user.role} (${S.user.empId})</div>
+      </div>
+      <button onclick="logout()" class="pill-3d bg-rose-500/30 text-rose-200 hover:bg-rose-500/50 border border-rose-500/60 font-black">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  `;
+}
+
+function render() {
+  renderHeader();
+  const app = $('#app');
+  if (!app) return;
+
+  if (!S.user) {
+    app.innerHTML = loginScreen();
+    return;
+  }
+
+  if (S.user.role === 'Manager') {
+    app.innerHTML = managerView();
+  } else if (S.user.role === 'Security') {
+    app.innerHTML = securityView();
+  } else {
+    app.innerHTML = employeeView();
+  }
+}
+
+// Initial application boot & live clock timer setup
+window.onload = function() {
+  render();
+  setInterval(() => {
+    const topGreeting = $('#top-greeting');
+    if (topGreeting) {
+      const timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      if (S.user) {
+        topGreeting.innerHTML = `
+          <span><i class="fa-solid fa-sun text-yellow-300"></i> ${greet()}, <b class="text-white font-black">${S.user.name}</b></span>
+          <span class="text-teal-300">|</span>
+          <span class="font-mono font-black text-yellow-300 bg-[#00241f] px-2.5 py-0.5 rounded-lg border border-[#00897B] shadow-inner"><i class="fa-regular fa-clock mr-1"></i>${timeNow}</span>
+        `;
+      } else {
+        topGreeting.innerHTML = `
+          <span class="font-mono font-black text-yellow-300 bg-[#00241f] px-2.5 py-0.5 rounded-lg border border-[#00897B] shadow-inner"><i class="fa-regular fa-clock mr-1"></i>${timeNow}</span>
+        `;
+      }
+    }
+  }, 1000);
+};
+</script>
+</body>
+</html>
